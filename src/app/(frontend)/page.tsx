@@ -8,6 +8,7 @@ import config from '@/payload.config'
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import SideNavBar from './components/SideNavBar';
+import { cn } from "@/lib/utils";
 import './styles.css'
 
 
@@ -19,7 +20,6 @@ export default async function HomePage() {
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
   
-
   return (
       <div className='scroll-smooth overflow-x-hidden bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen overscroll-none'>
         <SideNavBar />
@@ -176,6 +176,13 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+      <section className="py-10">
+            <div className="container">
+              <div className="flex w-full flex-col justify-between gap-10">
+                
+              </div>
+            </div>
+      </section>
     </div>
   )
 }
