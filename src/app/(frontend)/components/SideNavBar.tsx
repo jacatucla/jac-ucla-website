@@ -4,18 +4,18 @@ import {Home, Calendar, Mail} from 'lucide-react'
 export default function SideNavBar()
 {
     const navLinks = [
-        { name: 'Home', icon: Home, href: '#home' },
+        { name: 'Home', icon: Home, href: '' },
         { name: 'Events', icon: Calendar, href: '#events' },
-        { name: 'Contact Us', icon: Mail, href: '#contact' },
+        { name: 'Contact Us', icon: Mail, href: 'mailto:jacatucla@gmail.com' },
       ];
     
     return (
-      <div className="fixed h-screen top-0 left-0 z-10 group w-20 hover:w-64 bg-gradient-to-b from-pink-50 to-purple-50 border-r-4 border-pink-200 flex flex-col transition-all duration-300 ease-in-out">
+      <div className="fixed h-screen top-0 left-0 z-10 group w-20 hover:w-64 bg-gradient-to-b from-pink-50 to-purple-50 border-r-4 border-pink-200 flex flex-col transition-all duration-300 ease-in-out z-20">
       {/* Logo/Brand */}
       <div className="p-6 border-b-2 border-pink-200 overflow-hidden flex items-center justify-center h-40">
         <div className="relative flex items-center justify-center w-full h-full">
           {/* Vertical JAC (visible when collapsed) */}
-          <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 opacity-100 group-hover:opacity-0">
+          <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-0 opacity-100 group-hover:opacity-0">
             <span className="text-2xl font-bold text-pink-600">J</span>
             <span className="text-2xl font-bold text-pink-600">A</span>
             <span className="text-2xl font-bold text-pink-600">C</span>
@@ -50,10 +50,10 @@ export default function SideNavBar()
       </nav>
 
       {/* Social Media Footer */}
-      <div className="p-4 border-t-2 border-pink-200 h-28">
+      <div className="p-4 border-t-2 border-pink-200 h-44">
         <div className="flex flex-col group-hover:flex-row gap-4 items-center justify-center h-full">
           <a
-            href="https://discord.com"
+            href="https://discord.gg/dcvsZgX"
             target="_blank"
             rel="noopener noreferrer"
             className="w-10 h-10 flex items-center justify-center rounded-lg bg-pink-100 hover:bg-pink-200 transition-all duration-300 hover:shadow-md"
@@ -68,7 +68,7 @@ export default function SideNavBar()
             </svg>
           </a>
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/p/DPQnq4ojtc1/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-10 h-10 flex items-center justify-center rounded-lg bg-pink-100 hover:bg-pink-200 transition-all duration-300 hover:shadow-md"
@@ -80,6 +80,21 @@ export default function SideNavBar()
               viewBox="0 0 24 24"
             >
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07c3.252.148 4.771 1.691 4.919 4.919c.058 1.265.069 1.645.069 4.849c0 3.205-.012 3.584-.069 4.849c-.149 3.225-1.664 4.771-4.919 4.919c-1.266.058-1.644.07-4.85.07c-3.204 0-3.584-.012-4.849-.07c-3.26-.149-4.771-1.699-4.919-4.92c-.058-1.265-.07-1.644-.07-4.849c0-3.204.013-3.583.07-4.849c.149-3.227 1.664-4.771 4.919-4.919c1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072C2.695.272.273 2.69.073 7.052C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98c.059-1.28.073-1.689.073-4.948c0-3.259-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324a6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8a4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881a1.44 1.44 0 0 0 0-2.881z" />
+            </svg>
+          </a>
+          <a
+            href="https://linktr.ee/jacatucla?utm_source=linktree_profile_share&ltsid=af5f91b0-3be3-4c65-a757-f86259910272&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn5ILABEtU55l4z4IpxESumUTWZS946MCwiCmiB7NIJzkXs685XruRDWPXYbY_aem_quC3IdWvkJhmF2zZbbOXng"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 flex items-center justify-center rounded-lg bg-pink-100 hover:bg-pink-200 transition-all duration-300 hover:shadow-md"
+            aria-label="Linktree"
+          >
+            <svg
+              className="w-5 h-5 text-pink-600"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M13.5108 5.85343L17.5158 1.73642L19.8404 4.11701L15.6393 8.12199H21.5488V11.4268H15.6113L19.8404 15.5345L17.5158 17.8684L11.7744 12.099L6.03299 17.8684L3.70842 15.5438L7.93745 11.4361H2V8.12199H7.90944L3.70842 4.11701L6.03299 1.73642L10.038 5.85343V0H13.5108V5.85343ZM10.038 16.16H13.5108V24H10.038V16.16Z" />
             </svg>
           </a>
         </div>
