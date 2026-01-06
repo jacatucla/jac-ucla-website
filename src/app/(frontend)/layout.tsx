@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils'
 
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'UCLA&apos;s Japanese Animation Club',
+  title: 'JAC @ UCLA',
 }
 
 const fontSans = FontSans({
