@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 
 export const metadata = {
-  description: 'UCLA&apos;s Japanese Animation Club',
+  description: 'The Japanese Animation Club at UCLA. JAC at UCLA.',
   title: 'JAC @ UCLA',
 }
 
