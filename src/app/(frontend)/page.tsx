@@ -27,7 +27,7 @@ export default async function HomePage() {
           {/* Decorative Elements */}
           
           {/* Main Content */}
-          <div className="container mx-auto px-8 py-12 flex items-center justify-center min-h-screen font-['Comfortaa']">
+          <div className="max-w-full mx-auto px-8 py-12 flex items-center justify-center min-h-screen font-['Comfortaa']">
             <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0 bg-[url('/bg3.png')] bg-cover">
               {/* Left Side - Text Content */}
               <div className="space-y-8 flex flex-col items-center md:items-end scale-75 relative left-3/4">
@@ -85,8 +85,8 @@ export default async function HomePage() {
         </div>
         
         {/* Meetings Section */}
-        <div className="container bg-gradient-to-br from-gray-50 to-purple-50 relative pb-15">
-        <div className="container mx-auto px-8 py-16 pb-10 relative">
+        <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative pb-[3%]">
+        <div className="max-w-full mx-auto px-8 py-16 pb-10 relative">
           <div className="bg-gradient-to-br from-gray-50 to-purple-50 absolute inset-0 pointer-events-none"></div>
           <div className="absolute inset-0 bg-[url('/animebg.png')] bg-repeat bg-[size:400px_400px] opacity-80 pointer-events-none"></div>
           
@@ -176,20 +176,32 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
-      <section className="py-10 pt-6 pb-0">
-            <div className="container">
-              <div className="flex items-center w-full flex-col justify-between gap-10">
-                <div className='relative w-full max-w-[50%] pt-0 -mb-60 z-5 border-4 border-pink-400 rounded-2xl bg-white/55 backdrop-blur-xs shadow-lg p-6 pb-3'>
+      <section className="pt-[1%] pb-0">
+            <div className="max-w-full">
+              <div className="relative flex items-center w-full flex-col justify-between gap-10">
+                <div className='relative w-full pt-0'>
+                  <div className="relative w-full aspect-[21/5]">
+                    <Image
+                      src="/banner2resized.png"
+                      alt="Banner"
+                      fill
+                      className="object-cover"
+                    />
+                    {/* Social Media Icons Overlay */}
+                    
+                  </div>
+                </div>
+                <div className='absolute top-17/64 left-1/4 w-full max-w-[50%] pt-0 z-5 border-4 border-pink-400 rounded-2xl bg-white/55 backdrop-blur-xs shadow-lg pb-[1%]'>
                   <div className='h-[20vh] '>
                     <Image
                       src="/join-recolored2.png" // Path to image
                       alt="Description"
                       fill
-                      className='object-contain object-top pt-3'
+                      className='object-contain object-top pt-[1%]'
                     />
                   </div>
                   
-                  <div className="absolute inset-0 flex items-start justify-center gap-7 pt-15 z-10">
+                  <div className="absolute inset-0 flex items-center justify-center gap-7 pt-[10%] z-10">
                     
                     {/* Discord Icon */}
                     <a href="YOUR_DISCORD_LINK" target="_blank" rel="noopener noreferrer" 
@@ -216,18 +228,7 @@ export default async function HomePage() {
                     </a>
                   </div>
                 </div>
-                <div className='relative w-full pt-0'>
-                  <div className="relative w-full aspect-[21/5]">
-                    <Image
-                      src="/banner2resized.png"
-                      alt="Banner"
-                      fill
-                      className="object-cover"
-                    />
-                    {/* Social Media Icons Overlay */}
-                    
-                  </div>
-                </div>
+                
               </div>
             </div>
       </section>
