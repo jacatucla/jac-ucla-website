@@ -145,7 +145,7 @@ export default async function HomePage() {
                       </tr>
                       <tr className="border-b border-pink-400 hover:bg-pink-50/30 transition-colors">
                         <td className="py-3 px-6 text-pink-600 font-light text-center border-r border-pink-400">Week 6</td>
-                        <td className="py-3 px-6 text-pink-600 font-light text-center border-r border-pink-400">Valentine's Day Social</td>
+                        <td className="py-3 px-6 text-pink-600 font-light text-center border-r border-pink-400">Valentine&apos;s Day Social</td>
                         <td className="py-3 px-6 text-pink-600 font-light text-center">Koreatown</td>
                       </tr>
                       <tr className="border-b border-pink-400 hover:bg-pink-50/30 transition-colors">
