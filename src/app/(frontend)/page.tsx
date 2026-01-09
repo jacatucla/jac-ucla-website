@@ -65,11 +65,6 @@ export default async function HomePage() {
                   </Card>
                 </div>
               </div>
-              
-              {/* Right Side - Empty space for custom illustration */}
-              <div className="relative">
-                {/* Space reserved for illustration */}
-              </div>
             </div>
           </div>
           

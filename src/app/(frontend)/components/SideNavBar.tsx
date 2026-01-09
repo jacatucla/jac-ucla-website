@@ -4,7 +4,7 @@ import {Home, Calendar, Mail} from 'lucide-react'
 export default function SideNavBar()
 {
     const navLinks = [
-        { name: 'Home', icon: Home, href: '' },
+        { name: 'Home', icon: Home, href: '/' },
         { name: 'Events', icon: Calendar, href: '#events' },
         { name: 'Contact Us', icon: Mail, href: 'mailto:jacatucla@gmail.com' },
       ];
