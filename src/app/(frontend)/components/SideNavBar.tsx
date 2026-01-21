@@ -1,12 +1,13 @@
 import React from 'react'
-import {Home, Calendar, Mail} from 'lucide-react'
+import {Home, Calendar, Mail, Info} from 'lucide-react'
 
 export default function SideNavBar()
 {
     const navLinks = [
         { name: 'Home', icon: Home, href: '/' },
-        { name: 'Events', icon: Calendar, href: '#events' },
-        { name: 'Contact Us', icon: Mail, href: 'mailto:jacatucla@gmail.com' },
+        { name: 'About Us', icon: Info, href: '/about-us' },
+        { name: 'Events', icon: Calendar, href: '/#events' },
+        { name: 'Contact Us', icon: Mail, href: 'mailto:jacatucla@gmail.com' }
       ];
     
     return (
@@ -36,7 +37,7 @@ export default function SideNavBar()
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className="flex items-center gap-3 px-4 py-3 text-pink-600 rounded-xl hover:bg-pink-100 hover:shadow-md transition-all duration-300 font-medium overflow-hidden whitespace-nowrap"
+                  className="flex items-center gap-3 px-4 py-1 text-pink-600 rounded-xl hover:bg-pink-100 hover:shadow-md transition-all duration-300 font-medium overflow-hidden whitespace-nowrap"
                 >
                   <Icon className="w-5 h-5 flex-shrink-0 relative -left-1" />
                   <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
