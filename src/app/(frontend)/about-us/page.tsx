@@ -46,20 +46,20 @@ export default async function HomePage() {
   
 
   const teamMembers = [
-    { name: "Brian", role: "President", image: brian },
-    { name: "Ryan", role: "Vice President", image: ryan },
-    { name: "Winnie", role: "EVP", image: winnie },
-    { name: "Chelsea", role: "EVP", image: chelsea },
-    { name: "Ian", role: "Screener", image:ian },
-    { name: "Matthew", role: "Webmaster", image: matthew, description: '2nd year cogsci major.'},
-    { name: "Emily", role: "Stashmaster", image: emily },
-    { name: "Audrey", role: "Treasurer", image: audrey },
-    { name: "Natalia", role: "Secretary", image: natalia},
-    { name: "Daniel", role: "Discord Manager", image: daniel },
-    { name: "Kai", role: "Discord Manager", image: kai },
-    { name: "Nao", role: "General Officer", image: nao },
-    { name: "Amy", role: "General Officer", image: amy },
-    { name: "Amana", role: "General Officer", image: amana }
+    { name: "Brian", role: "President", image: brian, description: 'Senior' },
+    { name: "Ryan", role: "Vice President", image: ryan, description: 'Senior' },
+    { name: "Winnie", role: "EVP", image: winnie, description: 'Junior' },
+    { name: "Chelsea", role: "EVP", image: chelsea, description: 'Junior' },
+    { name: "Ian", role: "Screener", image:ian, description: 'Junior' },
+    { name: "Matthew", role: "Webmaster", image: matthew, description: 'Sophomore'},
+    { name: "Emily", role: "Stashmaster", image: emily, description: 'Junior' },
+    { name: "Audrey", role: "Treasurer", image: audrey, description: 'Senior' },
+    { name: "Natalia", role: "Secretary", image: natalia, description: 'Senior'},
+    { name: "Daniel", role: "Discord Manager", image: daniel, description: 'Senior' },
+    { name: "Kai", role: "Discord Manager", image: kai, description: 'Sophomore' },
+    { name: "Nao", role: "General Officer", image: nao, description: 'Junior' },
+    { name: "Amy", role: "General Officer", image: amy, description: 'Sophomore' },
+    { name: "Amana", role: "General Officer", image: amana, description: 'Junior' }
 
   ];
 
