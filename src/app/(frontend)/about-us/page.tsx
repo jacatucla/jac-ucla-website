@@ -33,6 +33,7 @@ import nao from '../../../../public/portraits/nao.jpeg';
 import amy from '../../../../public/portraits/amy.jpeg';
 import amana from '../../../../public/portraits/amana.jpeg';
 import natalia from '../../../../public/portraits/natalia.jpeg';
+import BoardCarousel from '../components/BoardCarousel'
 
 
 
@@ -50,7 +51,7 @@ export default async function HomePage() {
     { name: "Winnie", role: "EVP", image: winnie },
     { name: "Chelsea", role: "EVP", image: chelsea },
     { name: "Ian", role: "Screener", image:ian },
-    { name: "Matthew", role: "Webmaster", image: matthew },
+    { name: "Matthew", role: "Webmaster", image: matthew, description: '2nd year cogsci major.'},
     { name: "Emily", role: "Stashmaster", image: emily },
     { name: "Audrey", role: "Treasurer", image: audrey },
     { name: "Natalia", role: "Secretary", image: natalia},
@@ -91,7 +92,8 @@ export default async function HomePage() {
         </div>
         <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative py-20">
         <div className="max-w-full mx-auto relative">
-          <div className="bg-gradient-to-br from-gray-50 to-purple-50 absolute inset-0 pointer-events-none"></div>
+        <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative py-20">
+        <div className="max-w-full mx-auto relative">
           <div className="absolute inset-0 bg-[url('/animebg.png')] bg-repeat bg-[size:400px_400px] opacity-80 pointer-events-none"></div>
           
           <div className="max-w-4xl mx-auto relative z-10 px-4">
@@ -99,46 +101,11 @@ export default async function HomePage() {
               Meet The Board
             </h2>
             
-            <div className="border-4 border-pink-400 rounded-2xl p-8 md:p-12 bg-white/65 backdrop-blur-sm shadow-2xl overflow-visible">
-              <Carousel className="w-full" opts={{align: "center", slidesToScroll: 'auto'}}>
-                <CarouselContent className="-ml-2 md:-ml-4">
-                {teamMembers.map((member, index) => (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
-                    <div className="p-1 md:p-4">
-                      <Card className="border-2 border-pink-300 bg-white/80 hover:bg-white transition-all duration-300 hover:shadow-lg hover:scale-105">
-                        <CardContent className="flex flex-col aspect-square items-center justify-center p-6 space-y-4">
-                          
-                          {/* IMAGE CONTAINER */}
-                          <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-pink-200">
-                            
-                              // Inside your teamMembers.map
-                              <Image
-                              src={member.image}
-                              alt={member.name}
-                              fill
-                              priority={index < 3}
-                              placeholder="blur"
-                              // This is a Base64 encoded 1x1 pixel of #FCE4EC (Light Pink)
-                              className="object-cover duration-700 ease-in-out group-hover:opacity-75"
-                            />
-                            
-                          </div>
-
-                          <div className="text-center">
-                            <h3 className="text-xl font-semibold text-pink-700">{member.name}</h3>
-                            <p className="text-pink-400 font-medium">{member.role}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-0 -translate-x-12 bg-pink-400 hover:bg-pink-500 text-white border-pink-400" />
-                <CarouselNext className="right-0 translate-x-12 bg-pink-400 hover:bg-pink-500 text-white border-pink-400" />
-              </Carousel>
-            </div>
+            {/* Call the Client Component here */}
+            <BoardCarousel teamMembers={teamMembers} />
           </div>
+        </div>
+        </div>
         </div>
       </div>
       <Footer/>
