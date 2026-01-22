@@ -19,6 +19,23 @@ import SideNavBar from '../components/SideNavBar';
 import Banner from '../components/Banner'
 import { cn } from "@/lib/utils";
 import '../styles.css'
+import brian from '../../../../public/portraits/brian.jpeg';
+import ryan from '../../../../public/portraits/ryan.jpeg';
+import winnie from '../../../../public/portraits/winnie.jpeg';
+import chelsea from '../../../../public/portraits/chelsea.jpeg';
+import ian from '../../../../public/portraits/ian.png';
+import matthew from '../../../../public/portraits/matthew.jpeg';
+import emily from '../../../../public/portraits/emily.jpeg';
+import audrey from '../../../../public/portraits/audrey.jpeg';
+import daniel from '../../../../public/portraits/daniel.jpeg';
+import kai from '../../../../public/portraits/kai.jpeg';
+import nao from '../../../../public/portraits/nao.jpeg';
+import amy from '../../../../public/portraits/amy.jpeg';
+import amana from '../../../../public/portraits/amana.jpeg';
+import natalia from '../../../../public/portraits/natalia.jpeg';
+import BoardCarousel from '../components/BoardCarousel'
+
+
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -26,21 +43,23 @@ export default async function HomePage() {
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
 
+  
+
   const teamMembers = [
-    { name: "Brian", role: "President", image: "/portraits/brian.jpg" },
-    { name: "Ryan", role: "Vice President", image: "/portraits/ryan.jpg" },
-    { name: "Winnie", role: "EVP", image: "/portraits/winnie.jpg" },
-    { name: "Chelsea", role: "EVP", image: "/portraits/chelsea.JPG" },
-    { name: "Ian", role: "Screener", image: "/portraits/ian.png" },
-    { name: "Matthew", role: "Webmaster", image: "/portraits/matthew.JPG" },
-    { name: "Emily", role: "Stashmaster", image: "/portraits/emily.JPG" },
-    { name: "Audrey", role: "Treasurer", image: "/portraits/audrey.JPG" },
-    { name: "Natalia", role: "Secretary", image: "👤"},
-    { name: "Daniel", role: "Discord Manager", image: "/portraits/daniel.jpg" },
-    { name: "Kai", role: "Discord Manager", image: "/portraits/kai.jpg" },
-    { name: "Nao", role: "General Officer", image: "/portraits/nao.JPG" },
-    { name: "Amy", role: "General Officer", image: "/portraits/amy.JPG" },
-    { name: "Amana", role: "General Officer", image: "/portraits/amana.JPG" }
+    { name: "Brian", role: "President", image: brian, description: 'Senior' },
+    { name: "Ryan", role: "Vice President", image: ryan, description: 'Senior' },
+    { name: "Winnie", role: "EVP", image: winnie, description: 'Junior' },
+    { name: "Chelsea", role: "EVP", image: chelsea, description: 'Junior' },
+    { name: "Ian", role: "Screener", image:ian, description: 'Junior' },
+    { name: "Matthew", role: "Webmaster", image: matthew, description: 'Sophomore'},
+    { name: "Emily", role: "Stashmaster", image: emily, description: 'Junior' },
+    { name: "Audrey", role: "Treasurer", image: audrey, description: 'Senior' },
+    { name: "Natalia", role: "Secretary", image: natalia, description: 'Senior'},
+    { name: "Daniel", role: "Discord Manager", image: daniel, description: 'Senior' },
+    { name: "Kai", role: "Discord Manager", image: kai, description: 'Sophomore' },
+    { name: "Nao", role: "General Officer", image: nao, description: 'Junior' },
+    { name: "Amy", role: "General Officer", image: amy, description: 'Sophomore' },
+    { name: "Amana", role: "General Officer", image: amana, description: 'Junior' }
 
   ];
 
@@ -73,7 +92,8 @@ export default async function HomePage() {
         </div>
         <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative py-20">
         <div className="max-w-full mx-auto relative">
-          <div className="bg-gradient-to-br from-gray-50 to-purple-50 absolute inset-0 pointer-events-none"></div>
+        <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative py-20">
+        <div className="max-w-full mx-auto relative">
           <div className="absolute inset-0 bg-[url('/animebg.png')] bg-repeat bg-[size:400px_400px] opacity-80 pointer-events-none"></div>
           
           <div className="max-w-4xl mx-auto relative z-10 px-4">
@@ -81,46 +101,11 @@ export default async function HomePage() {
               Meet The Board
             </h2>
             
-            <div className="border-4 border-pink-400 rounded-2xl p-8 md:p-12 bg-white/65 backdrop-blur-sm shadow-2xl overflow-visible">
-              <Carousel className="w-full">
-                <CarouselContent className="-ml-4">
-                {teamMembers.map((member, index) => (
-                  <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                    <div className="p-4">
-                      <Card className="border-2 border-pink-300 bg-white/80 hover:bg-white transition-all duration-300 hover:shadow-lg hover:scale-105">
-                        <CardContent className="flex flex-col aspect-square items-center justify-center p-6 space-y-4">
-                          
-                          {/* IMAGE CONTAINER */}
-                          <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-pink-200">
-                            {member.image.startsWith('/') ? (
-                              <Image
-                                src={member.image}
-                                alt={member.name}
-                                fill
-                                className="object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center bg-gray-100 text-6xl">
-                                {member.image} {/* Renders the emoji if no path is provided */}
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="text-center">
-                            <h3 className="text-xl font-semibold text-gray-800">{member.name}</h3>
-                            <p className="text-pink-600 font-medium">{member.role}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-0 -translate-x-12 bg-pink-400 hover:bg-pink-500 text-white border-pink-400" />
-                <CarouselNext className="right-0 translate-x-12 bg-pink-400 hover:bg-pink-500 text-white border-pink-400" />
-              </Carousel>
-            </div>
+            {/* Call the Client Component here */}
+            <BoardCarousel teamMembers={teamMembers} />
           </div>
+        </div>
+        </div>
         </div>
       </div>
       <Footer/>
