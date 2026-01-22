@@ -27,11 +27,21 @@ export default async function HomePage() {
   const { user } = await payload.auth({ headers })
 
   const teamMembers = [
-    { name: "Team Member 1", role: "Founder", image: "👤" },
-    { name: "Team Member 2", role: "Designer", image: "👤" },
-    { name: "Team Member 3", role: "Developer", image: "👤" },
-    { name: "Team Member 4", role: "Marketing", image: "👤" },
-    { name: "Team Member 5", role: "Operations", image: "👤" }
+    { name: "Brian", role: "President", image: "/portraits/brian.jpg" },
+    { name: "Ryan", role: "Vice President", image: "/portraits/ryan.jpg" },
+    { name: "Winnie", role: "EVP", image: "/portraits/winnie.jpg" },
+    { name: "Chelsea", role: "EVP", image: "/portraits/chelsea.JPG" },
+    { name: "Ian", role: "Screener", image: "/portraits/ian.png" },
+    { name: "Matthew", role: "Webmaster", image: "/portraits/matthew.JPG" },
+    { name: "Emily", role: "Stashmaster", image: "/portraits/emily.JPG" },
+    { name: "Audrey", role: "Treasurer", image: "/portraits/audrey.JPG" },
+    { name: "Natalia", role: "Secretary", image: "👤"},
+    { name: "Daniel", role: "Discord Manager", image: "/portraits/daniel.jpg" },
+    { name: "Kai", role: "Discord Manager", image: "/portraits/kai.jpg" },
+    { name: "Nao", role: "General Officer", image: "/portraits/nao.JPG" },
+    { name: "Amy", role: "General Officer", image: "/portraits/amy.JPG" },
+    { name: "Amana", role: "General Officer", image: "/portraits/amana.JPG" }
+
   ];
 
  return(
@@ -74,21 +84,37 @@ export default async function HomePage() {
             <div className="border-4 border-pink-400 rounded-2xl p-8 md:p-12 bg-white/65 backdrop-blur-sm shadow-2xl overflow-visible">
               <Carousel className="w-full">
                 <CarouselContent className="-ml-4">
-                  {teamMembers.map((member, index) => (
-                    <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                      <div className="p-4">
-                        <Card className="border-2 border-pink-300 bg-white/80 hover:bg-white transition-all duration-300 hover:shadow-lg hover:scale-105">
-                          <CardContent className="flex flex-col aspect-square items-center justify-center p-6 space-y-4">
-                            <span className="text-6xl">{member.image}</span>
-                            <div className="text-center">
-                              <h3 className="text-xl font-semibold text-gray-800">{member.name}</h3>
-                              <p className="text-pink-600 font-medium">{member.role}</p>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CarouselItem>
-                  ))}
+                {teamMembers.map((member, index) => (
+                  <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <div className="p-4">
+                      <Card className="border-2 border-pink-300 bg-white/80 hover:bg-white transition-all duration-300 hover:shadow-lg hover:scale-105">
+                        <CardContent className="flex flex-col aspect-square items-center justify-center p-6 space-y-4">
+                          
+                          {/* IMAGE CONTAINER */}
+                          <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-pink-200">
+                            {member.image.startsWith('/') ? (
+                              <Image
+                                src={member.image}
+                                alt={member.name}
+                                fill
+                                className="object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center bg-gray-100 text-6xl">
+                                {member.image} {/* Renders the emoji if no path is provided */}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="text-center">
+                            <h3 className="text-xl font-semibold text-gray-800">{member.name}</h3>
+                            <p className="text-pink-600 font-medium">{member.role}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
                 </CarouselContent>
                 <CarouselPrevious className="left-0 -translate-x-12 bg-pink-400 hover:bg-pink-500 text-white border-pink-400" />
                 <CarouselNext className="right-0 translate-x-12 bg-pink-400 hover:bg-pink-500 text-white border-pink-400" />

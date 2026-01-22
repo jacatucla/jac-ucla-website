@@ -10,13 +10,16 @@ interface SlideDetail {
 }
 
 interface Slide {
-  type?: 'default' | 'image-only' | 'image-text-link';
+  type?: 'default' | 'image-only' | 'image-text-link' | 'image-text-card' | 'image-text-card-bottom' | 'image-text-card-button';
   title?: string[];
   subtitle?: string;
   details?: SlideDetail[];
   bgImage: string;
   text?: string;
+  description?: string;
+  description2?: string;
   link?: string;
+  buttonText?: string;
 }
 
 const HeroCarousel: React.FC = () => {
@@ -29,7 +32,7 @@ const HeroCarousel: React.FC = () => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 7000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, [autoScrollKey]);
@@ -46,14 +49,26 @@ const HeroCarousel: React.FC = () => {
       bgImage: '/bg3.png'
     },
     {
-      type: 'image-only',
-      bgImage: '/bg3.png'
+      type: 'image-text-card-bottom',
+      bgImage: '/carousel/screenings.png',
+      text: 'Quarterly Screenings',
+      description: 'Violet Evergarden &',
+      description2: 'Land of the Lustrous'
     },
     {
       type: 'image-text-link',
-      bgImage: '/bg3.png',
-      text: 'Join Our Community',
-      link: 'https://discord.gg/yourserver'
+      bgImage: '/carousel/officer apps.JPG',
+      text: 'Officers Applications Open',
+      link: 'https://docs.google.com/forms/d/e/1FAIpQLSdxeTrauNwfp4r_iglzEFjtEf8JGWcENVwJCWNdm3YuzJ6kmg/viewform',
+      buttonText: 'Apply Now'
+    },
+    {
+      type: 'image-text-card-button',
+      bgImage: '/carousel/presentation night.jpeg',
+      text: 'Presentation Night',
+      description: 'Present your favorite anime takes.',
+      buttonText: 'Sign Up Here',
+      link: 'https://docs.google.com/forms/d/e/1FAIpQLScBQR_3O3f6RadK3HmGwnTF4ARrtO9Yc1xHBwZcC_wcbbpZSQ/viewform'
     },
   ];
 
@@ -136,16 +151,14 @@ const HeroCarousel: React.FC = () => {
       <style jsx>{`
         @keyframes fadeIn {
           from {
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
+            opacity: 0.2;
           }
           to {
             opacity: 1;
-            transform: translateY(0) scale(1);
           }
         }
         .animate-fadeIn {
-          animation: fadeIn 0.6s ease-out forwards;
+          animation: fadeIn 0.5s ease-out forwards;
         }
         .animate-fadeIn > div {
           opacity: 1 !important;
@@ -172,21 +185,124 @@ const HeroCarousel: React.FC = () => {
           {slides[currentSlide].type === 'image-only' ? (
             // Image-only slide - no content overlay
             <div className="hidden"></div>
-          ) : slides[currentSlide].type === 'image-text-link' ? (
-            // Image with text and link as button
-            <div className="absolute inset-0 flex items-end justify-center pb-32 animate-fadeIn"
+          ) : slides[currentSlide].type === 'image-text-card-button' ? (
+            <div className="absolute inset-0 flex items-center justify-center animate-fadeIn"
                  key={currentSlide}>
-              <a 
-                href={slides[currentSlide].link} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group relative"
-              >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 to-pink-400 rounded-lg blur-sm opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                <button className="relative bg-white/70 backdrop-blur-sm text-pink-600 font-light text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border border-pink-300 shadow-md hover:shadow-lg hover:bg-white/80 hover:scale-102 transition-all duration-300 tracking-wide">
-                  {slides[currentSlide].text}
-                </button>
-              </a>
+              <div className="relative max-w-xl w-xl mx-4">
+                <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <Card className="relative border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80 opacity-100">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-light text-pink-600 tracking-wider text-center mb-1">
+                    {slides[currentSlide].text}
+                  </h2>
+                  {slides[currentSlide].description && (
+                    <>
+                      <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-1"></div>
+                      <div className="text-sm sm:text-base text-pink-600 font-light text-center italic">
+                        {slides[currentSlide].description}
+                        <br></br>
+                        {slides[currentSlide].description2}
+                      </div>
+                    </>
+                  )}
+                  <div className="flex justify-center">
+                  <a 
+                    href={slides[currentSlide].link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative justify-center"
+                  >
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 to-pink-400 rounded-lg blur-sm opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                    <button className="relative bg-white/70 backdrop-blur-sm text-pink-600 font-light text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border-2 border-pink-300 shadow-lg hover:shadow-lg hover:bg-white/80 hover:scale-102 transition-all duration-300 tracking-wide">
+                      {slides[currentSlide].buttonText}
+                    </button>
+                  </a>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          ) 
+          : slides[currentSlide].type === 'image-text-link' ? (
+            // Image with text and link as button
+            <div className="absolute inset-0 flex items-center justify-center animate-fadeIn"
+                 key={currentSlide}>
+              <div className="relative max-w-md w-md mx-4">
+                <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <Card className="relative border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80 opacity-90">
+                  <div className="text-lg sm:text-xl md:text-2xl font-light text-pink-600 tracking-wider text-center mb-1">
+                    {slides[currentSlide].text}
+                  </div>
+                  {slides[currentSlide].description && (
+                    <>
+                      <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-1"></div>
+                      <div className="text-sm sm:text-base text-pink-600 font-light text-center italic">
+                        {slides[currentSlide].description}
+                        <br></br>
+                        {slides[currentSlide].description2}
+                      </div>
+                    </>
+                  )}
+                  <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-1"></div>
+                  <div className="flex justify-center">
+                    
+                  <a 
+                    href={slides[currentSlide].link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative justify-center"
+                  >
+                    
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-lg blur-sm opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                    <button className="relative bg-white/30 backdrop-blur-sm text-pink-600 font-light text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border-2 border-pink-300 shadow-lg hover:shadow-lg hover:bg-white/80 hover:scale-102 transition-all duration-300 tracking-wide">
+                      {slides[currentSlide].buttonText}
+                    </button>
+                  </a>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          ) : slides[currentSlide].type === 'image-text-card' ? (
+            // Image with centered text card
+            <div className="absolute inset-0 flex items-center justify-center animate-fadeIn"
+                 key={currentSlide}>
+              <div className="relative max-w-md mx-4">
+                <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <Card className="relative border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-light text-pink-600 tracking-wider text-center mb-1">
+                    {slides[currentSlide].text}
+                  </h2>
+                  {slides[currentSlide].description && (
+                    <>
+                      <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-1"></div>
+                      <p className="text-sm sm:text-base text-pink-600 font-light text-center">
+                        {slides[currentSlide].description}
+                      </p>
+                    </>
+                  )}
+                </Card>
+              </div>
+            </div>
+          ) : slides[currentSlide].type === 'image-text-card-bottom' ? (
+            // Image with text card positioned at bottom quarter
+            <div className="absolute inset-0 flex items-end justify-center animate-fadeIn pb-15"
+                 key={currentSlide}>
+              <div className="relative max-w-md mx-4">
+                <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <Card className="relative border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80 opacity-80">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-light text-pink-600 tracking-wider text-center mb-1">
+                    {slides[currentSlide].text}
+                  </h2>
+                  {slides[currentSlide].description && (
+                    <>
+                      <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-1"></div>
+                      <div className="text-sm sm:text-base text-pink-600 font-light text-center italic">
+                        {slides[currentSlide].description}
+                        <br></br>
+                        {slides[currentSlide].description2}
+                      </div>
+                    </>
+                  )}
+                </Card>
+              </div>
             </div>
           ) : (
             // Default slide with full content
