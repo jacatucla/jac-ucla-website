@@ -39,7 +39,7 @@ export default async function HomePage() {
             <div className="max-w-full mx-auto flex items-center justify-center min-h-screen font-['Comfortaa']">
                 <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0 bg-[url('/bg3.png')] bg-cover">
                               {/* Left Side - Text Content */}
-                              <div className="space-y-8 flex flex-col items-center md:items-end scale-75 relative left-3/4">
+                              <div className="space-y-8 flex flex-col items-center md:items-end scale-75 relative left-1/2 -translate-x-1/2 md:left-3/4 md:translate-x-0">
                                 <div className="relative">
                                   <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
                                    

@@ -15,30 +15,31 @@ export default function SideNavBar() {
 
   return (
     <>
+      {/* Mobile Overlay */}
+      {isMobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black opacity-50 bg-opacity-50 z-40 transition-opacity duration-300"
+          onClick={() => setIsMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="md:hidden fixed top-4 left-4 z-30 w-12 h-12 flex items-center justify-center rounded-lg bg-pink-100 hover:bg-pink-200 transition-all duration-300 shadow-md"
+        className="md:hidden fixed top-4 left-4 z-50 w-12 h-12 flex items-center justify-center rounded-lg bg-pink-100 hover:bg-pink-200 transition-all duration-300 shadow-md"
         aria-label="Toggle menu"
       >
         {isMobileOpen ? (
-          <X className="w-6 h-6 text-pink-600" />
+          <X className="w-6 h-6 text-pink-600 opacity-0 transition-all duration-0" />
         ) : (
           <Menu className="w-6 h-6 text-pink-600" />
         )}
       </button>
 
-      {/* Mobile Overlay */}
-      {isMobileOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      )}
-
       {/* Sidebar */}
-      <div className={`fixed h-screen top-0 left-0 group bg-gradient-to-b from-pink-50 to-purple-50 border-r-4 border-pink-200 flex flex-col transition-all duration-300 ease-in-out z-20
-        ${isMobileOpen ? 'w-64' : '-translate-x-full md:translate-x-0'}
+      <div className={`fixed h-screen top-0 left-0 group bg-gradient-to-b from-pink-50 to-purple-50 border-r-4 border-pink-200 flex flex-col transition-all duration-300 ease-in-out
+        ${isMobileOpen ? 'w-64 z-50' : '-translate-x-full z-50 md:translate-x-0'}
         md:w-20 md:hover:w-64`}>
         {/* Logo/Brand */}
         <div className="p-6 border-b-2 border-pink-200 overflow-hidden flex items-center justify-center h-40">
