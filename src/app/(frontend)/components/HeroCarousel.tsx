@@ -10,19 +10,33 @@ interface SlideDetail {
 }
 
 interface Slide {
-  title: string[];
-  subtitle: string;
-  details: SlideDetail[];
+  type?: 'default' | 'image-only' | 'image-text-link';
+  title?: string[];
+  subtitle?: string;
+  details?: SlideDetail[];
   bgImage: string;
+  text?: string;
+  link?: string;
 }
 
 const HeroCarousel: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [autoScrollKey, setAutoScrollKey] = useState<number>(0);
+
+  // Auto-scroll effect with reset capability
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, [autoScrollKey]);
 
   const slides: Slide[] = [
     {
+      type: 'default',
       title: ['JAPANESE', 'ANIMATION', 'CLUB'],
       subtitle: '@ UCLA',
       details: [
@@ -32,23 +46,15 @@ const HeroCarousel: React.FC = () => {
       bgImage: '/bg3.png'
     },
     {
-      title: ['UPCOMING', 'EVENTS'],
-      subtitle: '& SCREENINGS',
-      details: [
-        { icon: 'calendar', text: 'Winter Quarter 2026' },
-        { icon: 'users', text: 'Join Us!' }
-      ],
+      type: 'image-only',
       bgImage: '/bg3.png'
     },
     {
-      title: ['CONNECT', 'WITH US'],
-      subtitle: 'Online',
-      details: [
-        { icon: 'message', text: 'Discord & Instagram' },
-        { icon: 'mail', text: 'jac@ucla.edu' }
-      ],
-      bgImage: '/bg3.png'
-    }
+      type: 'image-text-link',
+      bgImage: '/bg3.png',
+      text: 'Join Our Community',
+      link: 'https://discord.gg/yourserver'
+    },
   ];
 
   const minSwipeDistance = 50;
@@ -78,10 +84,12 @@ const HeroCarousel: React.FC = () => {
 
   const nextSlide = (): void => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setAutoScrollKey(prev => prev + 1);
   };
 
   const prevSlide = (): void => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setAutoScrollKey(prev => prev + 1);
   };
 
   const getIcon = (iconName: SlideDetail['icon']): React.ReactElement | null => {
@@ -125,6 +133,25 @@ const HeroCarousel: React.FC = () => {
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.6s ease-out forwards;
+        }
+        .animate-fadeIn > div {
+          opacity: 1 !important;
+        }
+      `}</style>
+
       {/* Decorative Elements */}
       <div className="absolute top-0 left-0 w-96 h-96 opacity-20 pointer-events-none">
         <svg viewBox="0 0 200 200" className="w-full h-full text-pink-300">
@@ -138,41 +165,64 @@ const HeroCarousel: React.FC = () => {
 
       {/* Main Content */}
       <div className="max-w-full mx-auto px-4 sm:px-8 py-12 flex items-center justify-center min-h-screen font-['Comfortaa']">
-        <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0 bg-cover" 
+        <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0 bg-cover transition-all duration-700 ease-in-out" 
              style={{ backgroundImage: `url('${slides[currentSlide].bgImage}')` }}>
           
           {/* Slide Content */}
-          <div className="space-y-8 flex flex-col items-center md:items-end scale-75 md:scale-75 sm:scale-90 relative md:left-3/4 left-0">
-            <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-               
-              <Card className="inline-block border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-8 sm:py-12 px-8 sm:px-12 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80">
-                {slides[currentSlide].title.map((line, index) => (
-                  <h1 key={index} className="text-xl sm:text-2xl md:text-3xl font-light text-pink-600 mb-1 tracking-wider">
-                    {line}
-                    {index === slides[currentSlide].title.length - 1 && (
-                      <span className="text-2xl sm:text-3xl text-pink-600 font-light relative -top-1">
-                        {' '}{slides[currentSlide].subtitle}
-                      </span>
-                    )}
-                  </h1>
-                ))}
-                
-                <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-6"></div>
-                
-                <div className="text-center space-y-3 text-pink-600">
-                  {slides[currentSlide].details.map((detail, index) => (
-                    <div key={index} className="flex items-center justify-center gap-2 text-base sm:text-lg font-light">
-                      <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {getIcon(detail.icon)}
-                      </svg>
-                      <span>{detail.text}</span>
-                    </div>
-                  ))}
-                </div>                
-              </Card>
+          {slides[currentSlide].type === 'image-only' ? (
+            // Image-only slide - no content overlay
+            <div className="hidden"></div>
+          ) : slides[currentSlide].type === 'image-text-link' ? (
+            // Image with text and link as button
+            <div className="absolute inset-0 flex items-end justify-center pb-32 animate-fadeIn"
+                 key={currentSlide}>
+              <a 
+                href={slides[currentSlide].link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 to-pink-400 rounded-lg blur-sm opacity-20 group-hover:opacity-30 transition duration-300"></div>
+                <button className="relative bg-white/70 backdrop-blur-sm text-pink-600 font-light text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border border-pink-300 shadow-md hover:shadow-lg hover:bg-white/80 hover:scale-102 transition-all duration-300 tracking-wide">
+                  {slides[currentSlide].text}
+                </button>
+              </a>
             </div>
-          </div>
+          ) : (
+            // Default slide with full content
+            <div className="space-y-8 flex flex-col items-center md:items-end scale-75 md:scale-75 sm:scale-90 relative md:left-3/4 left-0 animate-fadeIn"
+                 key={currentSlide}>
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                 
+                <Card className="inline-block border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-8 sm:py-12 px-8 sm:px-12 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80">
+                  {slides[currentSlide].title?.map((line, index) => (
+                    <h1 key={index} className="text-xl sm:text-2xl md:text-3xl font-light text-pink-600 mb-1 tracking-wider">
+                      {line}
+                      {index === slides[currentSlide].title!.length - 1 && (
+                        <span className="text-2xl sm:text-3xl text-pink-600 font-light relative -top-1">
+                          {' '}{slides[currentSlide].subtitle}
+                        </span>
+                      )}
+                    </h1>
+                  ))}
+                  
+                  <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-6"></div>
+                  
+                  <div className="text-center space-y-3 text-pink-600">
+                    {slides[currentSlide].details?.map((detail, index) => (
+                      <div key={index} className="flex items-center justify-center gap-2 text-base sm:text-lg font-light">
+                        <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          {getIcon(detail.icon)}
+                        </svg>
+                        <span>{detail.text}</span>
+                      </div>
+                    ))}
+                  </div>                
+                </Card>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -198,7 +248,10 @@ const HeroCarousel: React.FC = () => {
         {slides.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentSlide(index)}
+            onClick={() => {
+              setCurrentSlide(index);
+              setAutoScrollKey(prev => prev + 1);
+            }}
             className={`w-1 h-1 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
               currentSlide === index 
                 ? 'bg-pink-600' 

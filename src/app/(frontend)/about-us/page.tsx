@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 import config from '@/payload.config'
 import { Card, CardContent} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import Footer from '../components/Footer'
 import {
     Carousel,
     CarouselContent,
@@ -15,6 +16,7 @@ import {
     CarouselPrevious,
   } from "@/components/ui/carousel"
 import SideNavBar from '../components/SideNavBar';
+import Banner from '../components/Banner'
 import { cn } from "@/lib/utils";
 import '../styles.css'
 
@@ -35,6 +37,7 @@ export default async function HomePage() {
  return(
     <div className='scroll-smooth overflow-x-hidden bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen'>
         <SideNavBar></SideNavBar>
+        <Banner></Banner>
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50 relative overflow-hidden border-pink-200 border-b-2">      
             <div className="max-w-full mx-auto flex items-center justify-center min-h-screen font-['Comfortaa']">
                 <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0 bg-[url('/bg3.png')] bg-cover">
@@ -43,13 +46,14 @@ export default async function HomePage() {
                                 <div className="relative">
                                   <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
                                    
-                                  <Card className="inline-block border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-12 px-12 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80">
+                                  <Card className="inline-block border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-12 px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80 max-w-md">
                                     <h1 className="text-2xl md:text-3xl font-light text-pink-600 mb-1 tracking-wider text-center">
-                                      ABOUT
+                                      ABOUT JAC
                                     </h1>
-                                    <h1 className="text-2xl md:text-3xl font-light text-pink-600 mb-1 tracking-wider text-center">
-                                      US
+                                    <h1 className="text-2xl md:text-3xl font-light text-pink-600 mb-6 tracking-wider text-center">
+                                    @ UCLA
                                     </h1>
+                                    <p className="text-lg font-normal text-pink-500 tracking-wide text-center leading-relaxed">We're a club dedicated to facilitating both on and off-campus gatherings for the appreciation of Japanese anime and culture!</p>
                                                                                    
                             </Card>
                         </div>
@@ -93,6 +97,7 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
  );
 
