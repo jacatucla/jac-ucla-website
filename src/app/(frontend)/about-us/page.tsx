@@ -69,7 +69,22 @@ export default async function HomePage() {
         <Banner></Banner>
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50 relative overflow-hidden border-pink-200 border-b-2">      
             <div className="max-w-full mx-auto flex items-center justify-center min-h-screen font-['Comfortaa']">
-                <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0 bg-[url('/bg3.png')] bg-cover">
+                <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0">
+                <div className="absolute inset-0 z-0">
+                    <div
+                      className='absolute inset-0 transition-opacity duration-700 ease-in-out'
+                      
+                    >
+                      <Image
+                        src={'/bg3.png'}
+                        alt="Background"
+                        fill
+                        className="object-cover object-center"
+                        sizes="100vw"
+                        quality={100}
+                      />
+                    </div>
+            </div>   
                               {/* Left Side - Text Content */}
                               <div className="space-y-8 flex flex-col items-center md:items-end scale-75 relative left-1/2 -translate-x-1/2 md:left-3/4 md:translate-x-0">
                                 <div className="relative">
@@ -90,14 +105,14 @@ export default async function HomePage() {
                 </div>
             </div>
         </div>
-        <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative py-20">
+        <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative py-15">
         <div className="max-w-full mx-auto relative">
-        <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative py-20">
+        <div className="max-w-full bg-gradient-to-br from-gray-50 to-purple-50 relative">
         <div className="max-w-full mx-auto relative">
-          <div className="absolute inset-0 bg-[url('/animebg.png')] bg-repeat bg-[size:400px_400px] opacity-80 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[url('/animebg.png')] bg-repeat bg-[size:400px_400px] opacity-80 pointer-events-none object-center"></div>
           
           <div className="max-w-4xl mx-auto relative z-10 px-4">
-            <h2 className="text-4xl font-light text-pink-600 text-center mb-12 tracking-wider">
+            <h2 className="text-4xl font-light text-pink-600 text-center mb-15 tracking-wider">
               Meet The Board
             </h2>
             
