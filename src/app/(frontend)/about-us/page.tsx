@@ -46,20 +46,20 @@ export default async function HomePage() {
   
 
   const teamMembers = [
-    { name: "Brian", role: "President", image: brian, description: 'Senior' },
-    { name: "Ryan", role: "Vice President", image: ryan, description: 'Senior' },
-    { name: "Winnie", role: "EVP", image: winnie, description: 'Junior' },
-    { name: "Chelsea", role: "EVP", image: chelsea, description: 'Junior' },
-    { name: "Ian", role: "Screener", image:ian, description: 'Junior' },
-    { name: "Matthew", role: "Webmaster", image: matthew, description: 'Sophomore'},
-    { name: "Emily", role: "Stashmaster", image: emily, description: 'Junior' },
-    { name: "Audrey", role: "Treasurer", image: audrey, description: 'Senior' },
-    { name: "Natalia", role: "Secretary", image: natalia, description: 'Senior'},
-    { name: "Daniel", role: "Discord Manager", image: daniel, description: 'Senior' },
-    { name: "Kai", role: "Discord Manager", image: kai, description: 'Sophomore' },
-    { name: "Nao", role: "General Officer", image: nao, description: 'Junior' },
-    { name: "Amy", role: "General Officer", image: amy, description: 'Sophomore' },
-    { name: "Amana", role: "General Officer", image: amana, description: 'Junior' }
+    { name: "Brian", role: "President", image: brian, year: 'Senior' , major:'Physiological Science'},
+    { name: "Ryan", role: "Vice President", image: ryan, year: 'Senior', major:'Cognitive Science'},
+    { name: "Winnie", role: "EVP", image: winnie, year: 'Junior', major: 'Bioengineering'},
+    { name: "Chelsea", role: "EVP", image: chelsea, year: 'Junior', major: 'Biology' },
+    { name: "Ian", role: "Screener", image:ian, year: 'Junior', major: 'Economics'},
+    { name: "Matthew", role: "Webmaster", image: matthew, year: 'Sophomore', major:'Cognitive Science'},
+    { name: "Emily", role: "Stashmaster", image: emily, year: 'Junior', major: 'MCDB'},
+    { name: "Audrey", role: "Treasurer", image: audrey, year: 'Senior', major: 'MIMG'},
+    { name: "Natalia", role: "Secretary", image: natalia, year: 'Senior', major: 'CogSci & Art History'},
+    { name: "Daniel", role: "Discord Manager", image: daniel, year: 'Senior', major: 'Electrical Engineering'},
+    { name: "Kai", role: "Discord Manager", image: kai, year: 'Sophomore', major:'Biochemistry'},
+    { name: "Nao", role: "General Officer", image: nao, year: 'Junior', major: 'Linguistics & Psychology'},
+    { name: "Amy", role: "General Officer", image: amy, year: 'Sophomore', major: 'Psychology & English'},
+    { name: "Amana", role: "General Officer", image: amana, year: 'Junior', major: 'Stats & Data Science'}
 
   ];
 

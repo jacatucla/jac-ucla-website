@@ -63,10 +63,12 @@ export default function BoardCarousel({ teamMembers }: { teamMembers: any[] }) {
                         </span>
                       </div>
                       
-                      {member.description && (
-                        <p className="text-pink-600 text-sm leading-relaxed line-clamp-3 px-2 font-medium">
-                          {member.description}
-                        </p>
+                      {member.year && (
+                        <div className="flex items-center justify-center gap-1 text-sm text-pink-400 tracking-tighter">
+                          <span className="font-medium text-right">{member.year}</span>
+                          <span className="text-gray-400 text-center justify-center">|</span>
+                          <span className='text-left flex-none truncate'>{member.major}</span>
+                        </div>
                       )}
                     </div>
                   </CardContent>
