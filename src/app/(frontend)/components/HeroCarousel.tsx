@@ -136,9 +136,9 @@ const HeroCarousel: React.FC = () => {
               alt="Background"
               fill
               priority={index === 0}
-              className="object-cover"
+              className="object-cover object-center"
               sizes="100vw"
-              quality={85}
+              quality={100}
             />
           </div>
         ))}
