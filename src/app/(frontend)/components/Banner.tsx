@@ -145,14 +145,12 @@ export default function Banner() {
       <div
         className="hidden md:block absolute left-[100px] top-0 bottom-0 w-[130px] bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-500"
         style={{
-          backgroundImage: 'url("jaciecute.pn")',
           opacity: isHovered ? 0.5 : 0.3,
         }}
       />
       <div
         className="absolute right-13 top-0 bottom-0 w-[160px] bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-500"
         style={{
-          backgroundImage: 'url("/web-app-manifest-512x512")',
           opacity: isHovered ? 0.5 : 0.3,
         }}
       />

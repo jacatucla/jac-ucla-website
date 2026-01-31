@@ -157,12 +157,12 @@ const HeroCarousel: React.FC = () => {
             <div className="absolute inset-0 flex items-center justify-center animate-fadeIn" key={currentSlide}>
               <div className="relative max-w-xl w-xl mx-4">
                 <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 transition duration-500"></div>
-                <Card className="relative border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/80 opacity-100">
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-light text-pink-600 tracking-wider text-center mb-1">{slides[currentSlide].text}</h2>
+                <Card className="relative border-4 border-pink-400 bg-white/75 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:shadow-pink-300/50 hover:bg-white/85">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-pink-600 tracking-wider text-center mb-1">{slides[currentSlide].text}</h2>
                   {slides[currentSlide].description && (
                     <>
                       <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-1"></div>
-                      <div className="text-sm sm:text-base text-pink-600 font-light text-center italic">
+                      <div className="text-sm sm:text-base text-pink-600 font-semibold text-center italic">
                         {slides[currentSlide].description}<br/>{slides[currentSlide].description2}
                       </div>
                     </>
@@ -170,7 +170,7 @@ const HeroCarousel: React.FC = () => {
                   <div className="flex justify-center mt-4">
                     <a href={slides[currentSlide].link} target="_blank" rel="noopener noreferrer" className="group relative">
                       <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 to-pink-400 rounded-lg blur-sm opacity-20 group-hover:opacity-30 transition duration-300"></div>
-                      <button className="relative bg-white/70 backdrop-blur-sm text-pink-600 font-light text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border-2 border-pink-300 shadow-lg hover:bg-white/80 hover:scale-102 transition-all duration-300">
+                      <button className="relative bg-white/70 backdrop-blur-sm text-pink-600 font-semibold text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border-3 border-pink-600 shadow-lg hover:bg-white/80 hover:scale-102 transition-all duration-300">
                         {slides[currentSlide].buttonText}
                       </button>
                     </a>
@@ -182,12 +182,12 @@ const HeroCarousel: React.FC = () => {
             <div className="absolute inset-0 flex items-center justify-center animate-fadeIn" key={currentSlide}>
               <div className="relative max-w-md w-md mx-4">
                 <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 transition duration-500"></div>
-                <Card className="relative border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 opacity-90">
-                  <div className="text-lg sm:text-xl md:text-2xl font-light text-pink-600 tracking-wider text-center mb-1">{slides[currentSlide].text}</div>
+                <Card className="relative border-4 border-pink-400 bg-white/75 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:bg-white/85">
+                  <div className="text-lg sm:text-xl md:text-2xl font-bold text-pink-600 tracking-wider text-center mb-1">{slides[currentSlide].text}</div>
                   <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-4"></div>
                   <div className="flex justify-center">
                     <a href={slides[currentSlide].link} target="_blank" rel="noopener noreferrer" className="group relative">
-                      <button className="relative bg-white/30 backdrop-blur-sm text-pink-600 font-light text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border-2 border-pink-300 shadow-lg hover:bg-white/80 transition-all duration-300">
+                      <button className="relative bg-white/30 backdrop-blur-sm text-pink-600 font-semibold text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-lg border-3 border-pink-400 shadow-lg hover:bg-white/80 transition-all duration-300">
                         {slides[currentSlide].buttonText}
                       </button>
                     </a>
@@ -199,10 +199,10 @@ const HeroCarousel: React.FC = () => {
             <div className="absolute inset-0 flex items-end justify-center animate-fadeIn pb-20" key={currentSlide}>
               <div className="relative max-w-md mx-4">
                 <div className="absolute -inset-1 bg-gradient-to-r from-pink-300 via-gray-100 to-pink-300 rounded-3xl blur opacity-20 transition duration-500"></div>
-                <Card className="relative border-4 border-pink-400 bg-white/65 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 opacity-80">
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-light text-pink-600 tracking-wider text-center mb-1">{slides[currentSlide].text}</h2>
+                <Card className="relative border-4 border-pink-400 bg-white/75 backdrop-blur-sm py-4 sm:py-5 px-6 sm:px-8 rounded-2xl shadow-2xl hover:backdrop-blur-md transform transition-all duration-300 hover:scale-105 hover:bg-white/85">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-pink-600 tracking-wider text-center mb-1">{slides[currentSlide].text}</h2>
                   <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent mb-1"></div>
-                  <div className="text-sm sm:text-base text-pink-600 font-light text-center italic">
+                  <div className="text-sm sm:text-base text-pink-600 font-semibold text-center italic">
                     {slides[currentSlide].description}<br/>{slides[currentSlide].description2}
                   </div>
                 </Card>
