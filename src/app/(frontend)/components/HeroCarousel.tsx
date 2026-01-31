@@ -54,14 +54,6 @@ const HeroCarousel: React.FC = () => {
       link: 'https://docs.google.com/forms/d/e/1FAIpQLSdxeTrauNwfp4r_iglzEFjtEf8JGWcENVwJCWNdm3YuzJ6kmg/viewform',
       buttonText: 'Apply Now'
     },
-    {
-      type: 'image-text-card-button',
-      bgImage: '/carousel/presentation night.jpeg',
-      text: 'Presentation Night',
-      description: 'Present your favorite anime takes.',
-      buttonText: 'Sign Up Here',
-      link: 'https://docs.google.com/forms/d/e/1FAIpQLScBQR_3O3f6RadK3HmGwnTF4ARrtO9Yc1xHBwZcC_wcbbpZSQ/viewform'
-    },
   ];
 
   useEffect(() => {
