@@ -4,10 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CarouselSlide } from '@/payload-types';
 
 interface SlideDetail {
   icon: 'clock' | 'location' | 'calendar' | 'users' | 'message' | 'mail';
-  text: string;
+  text: string | undefined;
 }
 
 interface Slide {
@@ -23,11 +24,21 @@ interface Slide {
   buttonText?: string;
 }
 
-const HeroCarousel: React.FC = () => {
+export interface CarouselProp
+{
+    location: string | undefined,
+    day: string | undefined,
+    time: string | undefined,
+    slideList: CarouselSlide[]
+}
+
+const HeroCarousel = ({location, day, time, slideList}: CarouselProp) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [autoScrollKey, setAutoScrollKey] = useState<number>(0);
+
+  let dateTime = day + " " +time;
 
   const slides: Slide[] = [
     {
@@ -35,8 +46,8 @@ const HeroCarousel: React.FC = () => {
       title: ['JAPANESE', 'ANIMATION', 'CLUB'],
       subtitle: '@ UCLA',
       details: [
-        { icon: 'clock', text: 'Thursday 7-9PM' },
-        { icon: 'location', text: 'Haines A25' }
+        { icon: 'clock', text: dateTime },
+        { icon: 'location', text: location }
       ],
       bgImage: '/bg3.png'
     },

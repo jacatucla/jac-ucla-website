@@ -67,22 +67,28 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    basic: Basic;
+    event: Event;
+    carouselSlide: CarouselSlide;
+    bannerLinks: BannerLink;
+    boardMembers: BoardMember;
     media: Media;
-    pages: Page;
+    users: User;
     'payload-kv': PayloadKv;
-    'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    basic: BasicSelect<false> | BasicSelect<true>;
+    event: EventSelect<false> | EventSelect<true>;
+    carouselSlide: CarouselSlideSelect<false> | CarouselSlideSelect<true>;
+    bannerLinks: BannerLinksSelect<false> | BannerLinksSelect<true>;
+    boardMembers: BoardMembersSelect<false> | BoardMembersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    pages: PagesSelect<false> | PagesSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -98,13 +104,7 @@ export interface Config {
     collection: 'users';
   };
   jobs: {
-    tasks: {
-      schedulePublish: TaskSchedulePublish;
-      inline: {
-        input: unknown;
-        output: unknown;
-      };
-    };
+    tasks: unknown;
     workflows: unknown;
   };
 }
@@ -125,6 +125,130 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "basic".
+ */
+export interface Basic {
+  id: number;
+  Name: string;
+  Location: string;
+  Quarter: string;
+  Day: string;
+  Time: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event".
+ */
+export interface Event {
+  id: number;
+  Name: string;
+  'Week 1'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 2'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 3'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 4'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 5'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 6'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 7'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 8'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 9'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  'Week 10'?: {
+    Thursday?: string | null;
+    Saturday?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carouselSlide".
+ */
+export interface CarouselSlide {
+  id: number;
+  'Featured Image': number | Media;
+  Title: string;
+  'Page Type'?: ('default' | 'home') | null;
+  Subheading?: string | null;
+  'Button Link'?: string | null;
+  'Button Text'?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bannerLinks".
+ */
+export interface BannerLink {
+  id: number;
+  Link: string;
+  Text: string;
+  'Icon Type'?: ('form-icon' | 'game-icon') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "boardMembers".
+ */
+export interface BoardMember {
+  id: number;
+  'Member Name': string;
+  Role: string;
+  Year: string;
+  Major: string;
+  Picture: number | Media;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -152,53 +276,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: number;
-  title: string;
-  Blocks: MediaBlock[];
-  publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  media: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'carousel';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -216,114 +293,38 @@ export interface PayloadKv {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-jobs".
- */
-export interface PayloadJob {
-  id: number;
-  /**
-   * Input data provided to the job
-   */
-  input?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  taskStatus?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  completedAt?: string | null;
-  totalTried?: number | null;
-  /**
-   * If hasError is true this job will not be retried
-   */
-  hasError?: boolean | null;
-  /**
-   * If hasError is true, this is the error that caused it
-   */
-  error?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  /**
-   * Task execution log
-   */
-  log?:
-    | {
-        executedAt: string;
-        completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish';
-        taskID: string;
-        input?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        output?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        state: 'failed' | 'succeeded';
-        error?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  taskSlug?: ('inline' | 'schedulePublish') | null;
-  queue?: string | null;
-  waitUntil?: string | null;
-  processing?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'basic';
+        value: number | Basic;
+      } | null)
+    | ({
+        relationTo: 'event';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'carouselSlide';
+        value: number | CarouselSlide;
+      } | null)
+    | ({
+        relationTo: 'bannerLinks';
+        value: number | BannerLink;
+      } | null)
+    | ({
+        relationTo: 'boardMembers';
+        value: number | BoardMember;
       } | null)
     | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'pages';
-        value: number | Page;
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -369,6 +370,144 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "basic_select".
+ */
+export interface BasicSelect<T extends boolean = true> {
+  Name?: T;
+  Location?: T;
+  Quarter?: T;
+  Day?: T;
+  Time?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event_select".
+ */
+export interface EventSelect<T extends boolean = true> {
+  Name?: T;
+  'Week 1'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 2'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 3'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 4'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 5'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 6'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 7'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 8'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 9'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  'Week 10'?:
+    | T
+    | {
+        Thursday?: T;
+        Saturday?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carouselSlide_select".
+ */
+export interface CarouselSlideSelect<T extends boolean = true> {
+  'Featured Image'?: T;
+  Title?: T;
+  'Page Type'?: T;
+  Subheading?: T;
+  'Button Link'?: T;
+  'Button Text'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bannerLinks_select".
+ */
+export interface BannerLinksSelect<T extends boolean = true> {
+  Link?: T;
+  Text?: T;
+  'Icon Type'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "boardMembers_select".
+ */
+export interface BoardMembersSelect<T extends boolean = true> {
+  'Member Name'?: T;
+  Role?: T;
+  Year?: T;
+  Major?: T;
+  Picture?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -391,90 +530,11 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages_select".
- */
-export interface PagesSelect<T extends boolean = true> {
-  title?: T;
-  Blocks?:
-    | T
-    | {
-        hero?: T | MediaBlockSelect<T>;
-        content?: T | MediaBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-        carousel?: T | MediaBlockSelect<T>;
-      };
-  publishedAt?: T;
-  generateSlug?: T;
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock_select".
- */
-export interface MediaBlockSelect<T extends boolean = true> {
-  media?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
   key?: T;
   data?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-jobs_select".
- */
-export interface PayloadJobsSelect<T extends boolean = true> {
-  input?: T;
-  taskStatus?: T;
-  completedAt?: T;
-  totalTried?: T;
-  hasError?: T;
-  error?: T;
-  log?:
-    | T
-    | {
-        executedAt?: T;
-        completedAt?: T;
-        taskSlug?: T;
-        taskID?: T;
-        input?: T;
-        output?: T;
-        state?: T;
-        error?: T;
-        id?: T;
-      };
-  taskSlug?: T;
-  queue?: T;
-  waitUntil?: T;
-  processing?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -507,23 +567,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TaskSchedulePublish".
- */
-export interface TaskSchedulePublish {
-  input: {
-    type?: ('publish' | 'unpublish') | null;
-    locale?: string | null;
-    doc?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
-    global?: string | null;
-    user?: (number | null) | User;
-  };
-  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

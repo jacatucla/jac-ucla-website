@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { X, ChevronDown, Edit, Instagram, Calendar, Gamepad2 } from 'lucide-react'
+import { BannerLink } from '@/payload-types'
 
 // Discord icon component
 const DiscordIcon = () => (
@@ -27,24 +28,27 @@ const LinkTreeIcon = () => (
   </svg>
 )
 
-export default function Banner() {
+export interface BannerProps
+{
+    links: BannerLink[]
+}
+
+const Banner = ({links}: BannerProps) => {
   const [isVisible, setIsVisible] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
 
   // Primary links that appear first
-  const primaryLinks = [
-    {
-      text: 'Officer Applications',
-      href: 'https://docs.google.com/forms/d/e/1FAIpQLSdxeTrauNwfp4r_iglzEFjtEf8JGWcENVwJCWNdm3YuzJ6kmg/viewform',
-      icon: <Edit className="w-4 h-4" />
-    },
-    {
-      text: 'Anime of the Year Tournament',
-      href: 'https://docs.google.com/forms/d/e/1FAIpQLSfqd7yIv9Bb2KQ1kT4j50vcmGT2trpPuJLUwAGoXEyetplKRQ/viewform',
-      icon: <Edit className="w-4 h-4" />
-    },
-  ]
+  const iconMap = {
+    'form-icon': <Edit className="w-4 h-4" />,
+    'game-icon': <Gamepad2 className="w-4 h-4" />,
+  }
+  
+  const primaryLinks = links.map((item) => ({
+    text: item.Text,
+    href: item.Link,
+    icon: iconMap[item['Icon Type'] ?? 'form-icon'],
+  }))
 
   // Secondary links that appear on hover
   const secondaryLinks = [
@@ -186,6 +190,7 @@ export default function Banner() {
             }`}
           >
             {/* Primary links */}
+            {primaryLinks.length > 0 && (<>
             <div className="mb-1">
               <div className="flex justify-center gap-2 flex-wrap">
                 {primaryLinks.map((link, index) => (
@@ -203,6 +208,8 @@ export default function Banner() {
 
             {/* Divider */}
             <hr className="my-3 border-pink-600/15 w-4/5 mx-auto" />
+            </>
+            )}
 
             {/* Secondary links */}
             <div>
@@ -234,3 +241,5 @@ export default function Banner() {
     </div>
   )
 }
+
+export default Banner;

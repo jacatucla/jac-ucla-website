@@ -16,6 +16,19 @@ import './styles.css'
 import Footer from './components/Footer'
 
 
+function mapPayloadToSchedule(doc: any) {
+  return Array.from({ length: 10 }, (_, i) => {
+    const weekKey = `Week ${i + 1}`;
+    const weekData = doc[weekKey] ?? {};
+    return {
+      week: weekKey,
+      thursday: weekData.Thursday ?? "---",
+      saturday: weekData.Saturday ?? "---",
+    };
+  });
+}
+
+
 export default async function HomePage() {
   const headers = await getHeaders()
   const payloadConfig = await config
@@ -24,7 +37,37 @@ export default async function HomePage() {
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
-  const scheduleData = [
+  const { docs: basicInfo } = await payload.find({
+    collection: 'basic',
+    limit: 1,
+  })
+
+  var location, day, time, quarter;
+  if(basicInfo.length === 0)
+  {
+    location = "Haines A25";
+    day = "Thursday";
+    time = "7-9 PM";
+    quarter = "Winter";
+  }
+  else
+  {
+    location = basicInfo.at(0)?.Location;
+    day = basicInfo.at(0)?.Day;
+    time = basicInfo.at(0)?.Time;
+    quarter = basicInfo.at(0)?.Quarter;
+  }
+
+  const { docs: schedule } = await payload.find({
+    collection: 'event',
+    limit: 1,
+  })
+
+  var scheduleData;
+
+
+  if(schedule.length === 0){
+    scheduleData = [
     { week: "Week 1", thursday: "Special Screening + Water Balloons", saturday: "---" },
     { week: "Week 2", thursday: "Seasonal Screening Selection", saturday: "Winter Formal!!!" },
     { week: "Week 3", thursday: "Auction", saturday: "---" },
@@ -36,12 +79,29 @@ export default async function HomePage() {
     { week: "Week 9", thursday: "Raffle & Officer Elections", saturday: "Dessert Night" },
     { week: "Week 10", thursday: "No Meeting", saturday: "---" },
   ];
+  }
+  else
+  {
+    scheduleData = mapPayloadToSchedule(schedule.at(0))
+  }
+
+  const { docs: carousel } = await payload.find({
+    collection: 'carouselSlide',
+    limit: 15,
+  })
+
+  const { docs: bannerLinks } = await payload.find({
+    collection: 'bannerLinks',
+    limit: 15,
+  })
+
+
   
   return (
       <div className='scroll-smooth overflow-x-hidden bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen'>
         <SideNavBar />
-        <Banner></Banner>
-        <HeroCarousel/>
+        <Banner links = {bannerLinks}></Banner>
+        <HeroCarousel location = {location} day = {day} time = {time} slideList={carousel}/>
         
         {/* Meetings Section */}
         {/* Meetings Section */}
@@ -52,27 +112,30 @@ export default async function HomePage() {
             
             <div className="max-w-3xl mx-auto relative z-10" id='events'>
               {/* Header Box */}
-              <div className="border-4 border-pink-400 rounded-2xl p-6 md:p-8 bg-white/55 backdrop-blur-xs shadow-lg mb-8">
+              <div className="border-4 border-pink-400 rounded-2xl p-6 md:p-8 pb-1 md:pb-2 bg-white/55 backdrop-blur-xs shadow-lg mb-8">
                 <h2 className="text-3xl md:text-5xl font-light text-pink-600 text-center mb-6 tracking-wider font-['Comfortaa']">
                   MEETINGS
                 </h2>
                 <div className="h-px bg-pink-400 mb-6"></div>
                 <p className="text-center text-pink-600 font-['Comfortaa'] font-light text-base md:text-lg mb-0">
-                  Weekly meetings/screenings are held Thursdays at 7-9PM in Haines A25. We also hold some social events on Saturdays.
+                  Weekly meetings/screenings are held {day}s at {time} in {location}. We also hold some social events on Saturdays.
                 </p>
               </div>
               
               {/* Table Box */}
-              <div className="border-4 border-pink-400 rounded-2xl bg-white/55 backdrop-blur-xs shadow-lg overflow-hidden">
-                <div className="p-6 md:p-8 pb-4 pt-10">
-                  <h3 className="text-2xl md:text-4xl font-light text-pink-600 text-center tracking-wider font-['Comfortaa'] uppercase">
-                    Winter Schedule
+              <div className="border-4 border-pink-400 rounded-2xl pl-6 pr-6 md:pr-8 md:pl-8 bg-white/55 backdrop-blur-xs shadow-lg overflow-hidden">
+                <div className="p-6 md:p-8 pb-4">
+                  <h3 className="text-3xl md:text-5xl font-light text-pink-600 text-center tracking-wider font-['Comfortaa'] uppercase">
+                    {quarter} Schedule
                   </h3>
                 </div>
 
+                <div className="h-px bg-pink-400 mb-6"></div>
+
+
                 <Card className="relative overflow-hidden p-0 shadow-none border-none bg-transparent">
                   {/* Scroll wrapper for mobile */}
-                  <div className="overflow-x-auto px-4 md:px-8 py-6 pb-12">
+                  <div className="overflow-x-auto px-4 md:px-2 py-6 pb-12">
                     <table className="w-full min-w-[500px] md:min-w-0 font-['Comfortaa'] border-collapse border-2 border-pink-400">
                       <thead>
                         <tr className="border-b-2 border-pink-400 bg-pink-50/20">

@@ -5,7 +5,11 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Pages} from './collections/Pages'
+import {BannerLinks} from './collections/BannerLinks'
+import {BasicInfo} from './collections/BasicInfo'
+import { BoardCarousel } from './collections/BoardCarousel'
+import { HeroCarousel } from './collections/HeroCarousel'
+import { Schedule } from './collections/Schedule'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const filename = fileURLToPath(import.meta.url)
@@ -18,7 +22,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages],
+  collections: [BasicInfo, Schedule, HeroCarousel, BannerLinks, BoardCarousel, Media, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
