@@ -40,12 +40,38 @@ export default function BoardCarousel({members}: BoardProps) {
               <div className="p-1 md:p-4 h-full">
                 <Card className="border-2 border-pink-300 bg-gradient-to-b from-white to-pink-50/30 hover:from-white hover:to-pink-100/40 transition-all duration-300 hover:shadow-xl hover:scale-[1.03] hover:-translate-y-1 h-full rounded-2xl overflow-hidden group">
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-4 relative">
-                    {/* Decorative background circle - shadow effect */}
+
+                    {/* Background image — absolutely positioned behind content, clipped to top portion only */}
+{/* Background image — pull it flush to the card edge despite CardContent padding */}
+                      <div className="absolute -top-6 -left-6 -right-6 overflow-hidden border-b-1 border-pink-200" style={{ height: 'calc(66%)' }}>                      
+                        <Image
+                        src={(member.BackgroundImage as Media)?.url ?? '/fallback-bg.png'}
+                        alt=""
+                        fill
+                        className="object-cover"
+                      />
+                      {/* Fade out toward bottom so it blends into the card */}
+                      {/* Fade out toward bottom so it blends into the card */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/67 pointer-events-none" />
+                        {/* Blur mask at the transition zone — fades in blur only near the bottom */}
+                        <div
+                          className="absolute bottom-0 left-0 right-0 h-2/3 pointer-events-none"
+                          style={{
+                            backdropFilter: 'blur(2px)',
+                            WebkitBackdropFilter: 'blur(2px)',
+                            maskImage: 'linear-gradient(to bottom, transparent, black)',
+                            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black)',
+                          }}
+                        />
+                    </div>
+
+                    {/* Decorative background circle - shadow effect (unchanged) */}
                     <div className="absolute top-8 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none">
                       <div className="w-36 h-36 rounded-full bg-gradient-to-br from-pink-400/40 to-pink-500/60 blur-xl"></div>
                     </div>
-                    
-                    <div className="relative w-36 h-36 rounded-full overflow-hidden border-4 border-pink-200 shadow-lg shrink-0 group-hover:border-pink-300 group-hover:shadow-xl transition-all duration-300">
+
+                    {/* Profile picture (unchanged) */}
+                    <div className="relative w-36 h-36 rounded-full overflow-hidden border-4 border-pink-200 shadow-lg shrink-0 group-hover:border-pink-300 group-hover:shadow-xl transition-all duration-300 z-10">
                       <Image
                         src={(member.Picture as Media).url ?? '/fallback.png'}
                         alt={(member.Picture as Media).alt}
@@ -55,11 +81,12 @@ export default function BoardCarousel({members}: BoardProps) {
                       />
                     </div>
                     
+                    {/* Text content (unchanged) */}
                     <div className="text-center space-y-3 relative z-10">
                       <div className="space-y-2">
                         <h3 className="text-xl font-bold text-pink-700 group-hover:text-pink-800 transition-colors">{member['Member Name']}</h3>
                         <span className="inline-flex items-center relative w-30 md:w-36">
-                        <span className="w-0 h-0 border-l-0 border-r-[8px] border-r-pink-100 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent"></span>
+                          <span className="w-0 h-0 border-l-0 border-r-[8px] border-r-pink-100 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent"></span>
                           <span className="flex-1 px-4 py-1 bg-pink-100 text-pink-600 text-xs font-semibold border-y border-pink-300">
                             {member.Role}
                           </span>

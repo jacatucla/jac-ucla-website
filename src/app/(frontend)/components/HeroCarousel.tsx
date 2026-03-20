@@ -231,6 +231,10 @@ const HeroCarousel = ({ location, day, time, slideList, bgImage}: CarouselProp) 
 
   const dateTime = `${day ?? ''} ${time ?? ''}`.trim()
 
+  const visibleSlides = slideList.filter(item => {
+    return item.visible === true;
+  });
+
   const slides: Slide[] = [
     {
       type: 'default',
@@ -242,7 +246,7 @@ const HeroCarousel = ({ location, day, time, slideList, bgImage}: CarouselProp) 
       ],
       bgImage: bgImage,
     },
-    ...slideList.map((s): Slide => {
+    ...visibleSlides.map((s): Slide => {
       const base = {
         bgImage: typeof s.bgImage === 'string' ? s.bgImage : (s.bgImage as { url?: string })?.url ?? '',
         width: (s.width ?? DEFAULT_WIDTH) as SlideWidth,

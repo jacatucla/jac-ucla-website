@@ -35,6 +35,12 @@ export const HeroCarousel: CollectionConfig = {
       required: true
     },
     {
+      name: 'visible',
+      label: 'Enabled',
+      type: 'checkbox',
+      defaultValue: true
+    },
+    {
       name: 'bgImage',
       label: 'Background Image',
       type: 'upload',

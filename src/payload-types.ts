@@ -219,6 +219,7 @@ export interface Event {
 export interface CarouselSlide {
   id: number;
   name: string;
+  visible?: boolean | null;
   bgImage: number | Media;
   type:
     | 'default'
@@ -276,6 +277,7 @@ export interface BannerLink {
   id: number;
   Link: string;
   Text: string;
+  visible: boolean;
   'Icon Type'?: ('form-icon' | 'game-icon') | null;
   updatedAt: string;
   createdAt: string;
@@ -304,6 +306,7 @@ export interface BoardMember {
   Year?: ('Freshman' | 'Sophomore' | 'Junior' | 'Senior') | null;
   Major: string;
   Picture: number | Media;
+  BackgroundImage?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -514,6 +517,7 @@ export interface EventSelect<T extends boolean = true> {
  */
 export interface CarouselSlideSelect<T extends boolean = true> {
   name?: T;
+  visible?: T;
   bgImage?: T;
   type?: T;
   width?: T;
@@ -546,6 +550,7 @@ export interface CarouselSlideSelect<T extends boolean = true> {
 export interface BannerLinksSelect<T extends boolean = true> {
   Link?: T;
   Text?: T;
+  visible?: T;
   'Icon Type'?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -560,6 +565,7 @@ export interface BoardMembersSelect<T extends boolean = true> {
   Year?: T;
   Major?: T;
   Picture?: T;
+  BackgroundImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }

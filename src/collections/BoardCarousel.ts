@@ -91,6 +91,12 @@ export const BoardCarousel: CollectionConfig = {
       type: 'upload', // Use the upload field type
       relationTo: 'media', // Relate it to the 'media' collection
       required: true
+    },
+    {
+      name: 'BackgroundImage',
+      label: 'Background Image',
+      relationTo: 'media',
+      type: 'upload'
     }
   ],
 }

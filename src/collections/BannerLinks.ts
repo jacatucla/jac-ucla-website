@@ -17,6 +17,13 @@ export const BannerLinks: CollectionConfig = {
         required: true,
     },
     {
+      name: 'visible',
+      label: 'Enabled',
+      type: 'checkbox',
+      required: true,
+      defaultValue: true
+    },
+    {
         name: 'Icon Type',
         type: 'select',
         options: [
