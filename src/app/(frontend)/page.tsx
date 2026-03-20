@@ -42,13 +42,14 @@ export default async function HomePage() {
     limit: 1,
   })
 
-  var location, day, time, quarter;
+  var location, day, time, quarter, bgImage;
   if(basicInfo.length === 0)
   {
     location = "Haines A25";
     day = "Thursday";
     time = "7-9 PM";
     quarter = "Winter";
+    bgImage = "/bg3.png";
   }
   else
   {
@@ -56,6 +57,7 @@ export default async function HomePage() {
     day = basicInfo.at(0)?.Day;
     time = basicInfo.at(0)?.Time;
     quarter = basicInfo.at(0)?.Quarter;
+    bgImage = (basicInfo.at(0)?.bgImage as { url?: string })?.url;
   }
 
   const { docs: schedule } = await payload.find({
@@ -94,6 +96,7 @@ export default async function HomePage() {
     collection: 'bannerLinks',
     limit: 15,
   })
+  
 
 
   
@@ -101,7 +104,7 @@ export default async function HomePage() {
       <div className='scroll-smooth overflow-x-hidden bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen'>
         <SideNavBar />
         <Banner links = {bannerLinks}></Banner>
-        <HeroCarousel location = {location} day = {day} time = {time} slideList={carousel}/>
+        <HeroCarousel location = {location} day = {day} time = {time} slideList={carousel} bgImage={bgImage ?? '/bg3.png'}/>
         
         {/* Meetings Section */}
         {/* Meetings Section */}

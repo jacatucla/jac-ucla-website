@@ -12,14 +12,74 @@ export const BoardCarousel: CollectionConfig = {
         required: true,
     },
     {
-        name: 'Role',
-        type: 'text',
-        required: true,
+      name: 'Role',
+      type: 'select',
+      options: [
+      {
+        label: 'President',
+        value: 'President',
+      },
+      {
+        label: 'Vice President',
+        value: 'Vice President',
+      },
+      {
+        label: 'EVP',
+        value: 'EVP'
+      },
+      {
+        label: 'Screener',
+        value: 'Screener'
+      },
+      {
+        label: 'Webmaster',
+        value: 'Webmaster'
+      },
+      {
+        label: 'Stashmaster',
+        value: 'Stashmaster'
+      },
+      {
+        label: 'Treasurer',
+        value: 'Treasurer'
+      },
+      {
+        label: 'Secretary',
+        value: 'Secretary'
+      },
+      {
+        label: 'Discord Manager',
+        value: 'Discord Manager'
+      },
+      {
+        label: 'General Officer',
+        value: 'General Officer'
+      }
+    ],
+    defaultValue: 'General Officer',
     },
     {
-        name: 'Year',
-        type: 'text',
-        required: true,
+      name: 'Year',
+      type: 'select',
+      options: [
+      {
+        label: 'Freshman',
+        value: 'Freshman',
+      },
+      {
+        label: 'Sophomore',
+        value: 'Sophomore',
+      },
+      {
+        label: 'Junior',
+        value: 'Junior'
+      },
+      {
+        label: 'Senior',
+        value: 'Senior'
+      }
+    ],
+    defaultValue: 'Junior',
     },
     {
         name: 'Major',

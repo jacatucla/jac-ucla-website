@@ -54,6 +54,21 @@ export default async function HomePage() {
     depth:1
   })
 
+  const { docs: basicInfo } = await payload.find({
+    collection: 'basic',
+    limit: 1,
+  })
+
+  var bgImage;
+  if(basicInfo.length === 0)
+  {
+    bgImage = '/bg3.png';
+  }
+  else
+  {
+    bgImage = (basicInfo.at(0)?.bgImage as { url?: string })?.url;
+  }
+
 
   const teamMembers = [
     { name: "Brian", role: "President", image: brian, year: 'Senior' , major:'Physiological Science'},
@@ -86,7 +101,7 @@ export default async function HomePage() {
                       
                     >
                       <Image
-                        src={'/bg3.png'}
+                        src={bgImage ?? '/bg3.png'}
                         alt="Background"
                         fill
                         className="object-cover object-center"

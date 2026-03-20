@@ -1,6 +1,6 @@
 'use client'
-import React, { useState } from 'react'
-import { X, ChevronDown, Edit, Instagram, Calendar, Gamepad2 } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { X, ChevronDown, Edit, Instagram, Gamepad2 } from 'lucide-react'
 import { BannerLink } from '@/payload-types'
 
 // Discord icon component
@@ -28,94 +28,101 @@ const LinkTreeIcon = () => (
   </svg>
 )
 
-export interface BannerProps
-{
-    links: BannerLink[]
+export interface BannerProps {
+  links: BannerLink[]
 }
 
-const Banner = ({links}: BannerProps) => {
+const Banner = ({ links }: BannerProps) => {
   const [isVisible, setIsVisible] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
-  const [isHovered, setIsHovered] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+  // Use a ref to track if the device is touch-based, set after mount to avoid SSR issues
+  const isTouchDevice = useRef(false)
 
-  // Primary links that appear first
-  const iconMap = {
+  const iconMap: Record<string, React.ReactNode> = {
     'form-icon': <Edit className="w-4 h-4" />,
     'game-icon': <Gamepad2 className="w-4 h-4" />,
   }
-  
+
   const primaryLinks = links.map((item) => ({
     text: item.Text,
     href: item.Link,
     icon: iconMap[item['Icon Type'] ?? 'form-icon'],
   }))
 
-  // Secondary links that appear on hover
   const secondaryLinks = [
     {
       text: 'Discord',
       href: 'https://discord.gg/dcvsZgX',
-      icon: <DiscordIcon />
+      icon: <DiscordIcon />,
     },
     {
       text: 'Instagram',
       href: 'https://www.instagram.com/jacatucla/',
-      icon: <Instagram className="w-3.5 h-3.5" />
+      icon: <Instagram className="w-3.5 h-3.5" />,
     },
     {
       text: 'Linktree',
       href: 'https://linktr.ee/jacatucla?utm_source=linktree_profile_share&ltsid=af5f91b0-3be3-4c65-a757-f86259910272&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnAhIyiPfHbzZsrX8QoGNa5OBJnJNnw3fq7VRoAd02CofwUBe-97CjC33ZkL0_aem_T0jiHPLBpLIiXKPimgXkoQ',
-      icon: <LinkTreeIcon/>
+      icon: <LinkTreeIcon />,
     },
   ]
 
-  // Load banner state on mount
-  React.useEffect(() => {
-    const loadBannerState = () => {
-      try {
-        const savedData = localStorage.getItem('banner-closed')
-        if (savedData) {
-          const parsedData = JSON.parse(savedData)
-          const minutesSinceClosed = (Date.now() - parsedData.timestamp) / (1000 * 60)
-          
-          if (minutesSinceClosed > 10) {
-            setIsVisible(true)
-          } else {
-            setIsVisible(false)
-          }
+  useEffect(() => {
+    // Detect touch device after mount (safe from SSR)
+    isTouchDevice.current = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+
+    try {
+      const savedData = localStorage.getItem('banner-closed')
+      if (savedData) {
+        const parsedData = JSON.parse(savedData)
+        const minutesSinceClosed = (Date.now() - parsedData.timestamp) / (1000 * 60)
+        if (minutesSinceClosed <= 10) {
+          setIsVisible(false)
         }
-      } catch (error) {
-        console.log('No saved banner state')
-      } finally {
-        setIsLoading(false)
       }
+    } catch {
+      // ignore
+    } finally {
+      setIsLoading(false)
     }
-    loadBannerState()
   }, [])
 
-  const handleReopen = () => {
-    setIsVisible(true)
+  const handleMouseEnter = () => {
+    if (!isTouchDevice.current) setIsExpanded(true)
+  }
+
+  const handleMouseLeave = () => {
+    if (!isTouchDevice.current) setIsExpanded(false)
+  }
+
+  const handleBannerClick = () => {
+    if (isTouchDevice.current) setIsExpanded((prev) => !prev)
+  }
+
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIsVisible(false)
+    setIsExpanded(false)
     try {
-      localStorage.removeItem('banner-closed')
-    } catch (error) {
-      console.error('Failed to remove banner state:', error)
+      localStorage.setItem('banner-closed', JSON.stringify({ timestamp: Date.now() }))
+    } catch {
+      // ignore
     }
   }
 
-  const handleClose = () => {
-    setIsVisible(false)
+  const handleReopen = () => {
+    setIsVisible(true)
+    setIsExpanded(false)
     try {
-      localStorage.setItem('banner-closed', JSON.stringify({
-        timestamp: Date.now()
-      }))
-    } catch (error) {
-      console.error('Failed to save banner state:', error)
+      localStorage.removeItem('banner-closed')
+    } catch {
+      // ignore
     }
   }
 
   if (isLoading) return null
 
-  // Reopen button when banner is closed
   if (!isVisible) {
     return (
       <div className="fixed top-2 right-2 z-40">
@@ -132,50 +139,42 @@ const Banner = ({links}: BannerProps) => {
 
   return (
     <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleBannerClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={`fixed top-0 left-0 right-0 z-40 border-b-2 border-pink-200 overflow-hidden transition-[max-height] duration-500 ease-in-out ${
-        isHovered ? 'max-h-[200px] shadow-lg' : 'max-h-[64px] shadow-sm cursor-pointer'
+        isExpanded ? 'max-h-[200px] shadow-lg' : 'max-h-[64px] shadow-sm cursor-pointer'
       }`}
-      
     >
-      {/* Base gradient background with opacity gradient from edges to center */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-purple-100 to-pink-100 opacity-70 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-pink-100 to-transparent opacity-85 pointer-events-none"></div>
-      
-      {/* Anime pattern background */}
-      
+      {/* Background layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-purple-100 to-pink-100 opacity-70 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-pink-100 to-transparent opacity-85 pointer-events-none" />
+
       {/* Background decorations */}
       <div
         className="hidden md:block absolute left-[100px] top-0 bottom-0 w-[130px] bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-500"
-        style={{
-          opacity: isHovered ? 0.5 : 0.3,
-        }}
+        style={{ opacity: isExpanded ? 0.5 : 0.3 }}
       />
       <div
         className="absolute right-13 top-0 bottom-0 w-[160px] bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-500"
-        style={{
-          opacity: isHovered ? 0.5 : 0.3,
-        }}
+        style={{ opacity: isExpanded ? 0.5 : 0.3 }}
       />
 
       {/* Content */}
       <div className="relative max-w-full mx-auto px-2 pt-1 pb-1 flex items-center justify-center transition-all duration-500 z-10">
         <div className="text-center m-0 p-0">
-          {/* Main heading */}
           <div className="text-pink-600 font-bold text-xs md:text-sm m-0 p-0 leading-tight tracking-wide">
             Join the Japanese Animation Club!
           </div>
 
-          {/* Tagline - always visible */}
           <div className="text-gray-600 text-[0.65rem] md:text-xs leading-tight italic mt-1">
             Keep up to date with all our latest events (and become an officer!).
           </div>
 
-          {/* Hover indicator - disappears when expanded */}
+          {/* Chevron hint */}
           <div
             className={`flex justify-center items-center mt-0 overflow-visible transition-all duration-300 ${
-              isHovered ? 'opacity-0 max-h-0' : 'opacity-100 max-h-4'
+              isExpanded ? 'opacity-0 max-h-0' : 'opacity-100 max-h-4'
             }`}
           >
             <ChevronDown className="w-4 h-4 text-pink-600 animate-pulse" />
@@ -184,40 +183,39 @@ const Banner = ({links}: BannerProps) => {
           {/* Expanded content */}
           <div
             className={`overflow-visible transition-all ${
-              isHovered 
-                ? 'opacity-100 max-h-[150px] mt-4 duration-500 delay-75' 
+              isExpanded
+                ? 'opacity-100 max-h-[150px] mt-4 duration-500 delay-75'
                 : 'opacity-0 max-h-0 mt-0 duration-300'
             }`}
           >
-            {/* Primary links */}
-            {primaryLinks.length > 0 && (<>
-            <div className="mb-1">
-              <div className="flex justify-center gap-2 flex-wrap">
-                {primaryLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.href}
-                    className="inline-flex items-center gap-2 no-underline font-semibold px-2.5 py-1 rounded-xl bg-white/60 border-[1.5px] border-pink-600/20 transition-all duration-200 hover:bg-white/90 hover:border-pink-600 hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <span className="text-pink-600 text-xs md:text-sm">{link.icon}</span>
-                    <span className="text-pink-600 text-xs md:text-sm">{link.text}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Divider */}
-            <hr className="my-3 border-pink-600/15 w-4/5 mx-auto" />
-            </>
+            {primaryLinks.length > 0 && (
+              <>
+                <div className="mb-1">
+                  <div className="flex justify-center gap-2 flex-wrap">
+                    {primaryLinks.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.href}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-2 no-underline font-semibold px-2.5 py-1 rounded-xl bg-white/60 border-[1.5px] border-pink-600/20 transition-all duration-200 hover:bg-white/90 hover:border-pink-600 hover:-translate-y-0.5 hover:shadow-md"
+                      >
+                        <span className="text-pink-600 text-xs md:text-sm">{link.icon}</span>
+                        <span className="text-pink-600 text-xs md:text-sm">{link.text}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                <hr className="my-3 border-pink-600/15 w-4/5 mx-auto" />
+              </>
             )}
 
-            {/* Secondary links */}
             <div>
               <div className="flex justify-center gap-1.5 flex-wrap">
                 {secondaryLinks.map((link, index) => (
                   <a
                     key={index}
                     href={link.href}
+                    onClick={(e) => e.stopPropagation()}
                     className="inline-flex items-center gap-1.5 no-underline font-semibold px-2 py-0.5 rounded-lg bg-white/50 border-[1.5px] border-pink-600/15 transition-all duration-200 hover:bg-white/85 hover:border-pink-600 hover:-translate-y-px hover:shadow-sm"
                   >
                     <span className="text-pink-600 text-[0.65rem] md:text-xs">{link.icon}</span>
@@ -242,4 +240,4 @@ const Banner = ({links}: BannerProps) => {
   )
 }
 
-export default Banner;
+export default Banner

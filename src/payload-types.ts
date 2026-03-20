@@ -134,11 +134,31 @@ export interface Basic {
   id: number;
   Name: string;
   Location: string;
-  Quarter: string;
-  Day: string;
+  Quarter?: ('Fall' | 'Winter' | 'Spring') | null;
+  Day?: ('Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday') | null;
   Time: string;
+  bgImage: number | Media;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -191,38 +211,62 @@ export interface Event {
   createdAt: string;
 }
 /**
+ * Each document is one slide in the hero carousel.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "carouselSlide".
  */
 export interface CarouselSlide {
   id: number;
-  'Featured Image': number | Media;
-  Title: string;
-  'Page Type'?: ('default' | 'home') | null;
-  Subheading?: string | null;
-  'Button Link'?: string | null;
-  'Button Text'?: string | null;
+  name: string;
+  bgImage: number | Media;
+  type:
+    | 'default'
+    | 'image-only'
+    | 'image-text-card'
+    | 'image-text-card-bottom'
+    | 'image-text-link'
+    | 'image-text-card-button';
+  /**
+   * Controls the maximum width of the overlay card.
+   */
+  width?: ('max-w-xs' | 'max-w-sm' | 'max-w-md' | 'max-w-lg' | 'max-w-xl') | null;
+  /**
+   * Main heading shown on the card overlay.
+   */
+  text?: string | null;
+  description?: string | null;
+  description2?: string | null;
+  /**
+   * Full URL the button should open (opens in a new tab).
+   */
+  link?: string | null;
+  buttonText?: string | null;
+  /**
+   * Each row becomes one line of the large stacked title.
+   */
+  title?:
+    | {
+        line: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Smaller text appended to the last title line (e.g. "@ UCLA").
+   */
+  subtitle?: string | null;
+  /**
+   * Icon + text rows shown below the title (time, location, etc.).
+   */
+  details?:
+    | {
+        icon: 'clock' | 'location' | 'calendar' | 'users' | 'message' | 'mail';
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -243,8 +287,21 @@ export interface BannerLink {
 export interface BoardMember {
   id: number;
   'Member Name': string;
-  Role: string;
-  Year: string;
+  Role?:
+    | (
+        | 'President'
+        | 'Vice President'
+        | 'EVP'
+        | 'Screener'
+        | 'Webmaster'
+        | 'Stashmaster'
+        | 'Treasurer'
+        | 'Secretary'
+        | 'Discord Manager'
+        | 'General Officer'
+      )
+    | null;
+  Year?: ('Freshman' | 'Sophomore' | 'Junior' | 'Senior') | null;
   Major: string;
   Picture: number | Media;
   updatedAt: string;
@@ -378,6 +435,7 @@ export interface BasicSelect<T extends boolean = true> {
   Quarter?: T;
   Day?: T;
   Time?: T;
+  bgImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -455,12 +513,29 @@ export interface EventSelect<T extends boolean = true> {
  * via the `definition` "carouselSlide_select".
  */
 export interface CarouselSlideSelect<T extends boolean = true> {
-  'Featured Image'?: T;
-  Title?: T;
-  'Page Type'?: T;
-  Subheading?: T;
-  'Button Link'?: T;
-  'Button Text'?: T;
+  name?: T;
+  bgImage?: T;
+  type?: T;
+  width?: T;
+  text?: T;
+  description?: T;
+  description2?: T;
+  link?: T;
+  buttonText?: T;
+  title?:
+    | T
+    | {
+        line?: T;
+        id?: T;
+      };
+  subtitle?: T;
+  details?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
