@@ -122,7 +122,7 @@ export default async function HomePage() {
                                     <h1 className="text-2xl md:text-3xl font-light text-pink-600 mb-6 tracking-wider text-center">
                                     @ UCLA
                                     </h1>
-                                    <p className="text-lg font-normal text-pink-500 tracking-wide text-center leading-relaxed">We&apos;re a club dedicated to facilitating both on and off-campus gatherings for the appreciation of Japanese anime and culture!</p>
+                                    <p className="text-lg font-normal text-pink-500 tracking-wide text-center leading-relaxed">We&apos;re the largest anime club on UCLA campus dedicated to facilitating gatherings for the appreciation of Japanese anime and culture!</p>
                                                                                    
                             </Card>
                         </div>

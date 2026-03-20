@@ -121,7 +121,7 @@ export default async function HomePage() {
                 </h2>
                 <div className="h-px bg-pink-400 mb-6"></div>
                 <p className="text-center text-pink-600 font-['Comfortaa'] font-light text-base md:text-lg mb-0">
-                  Weekly meetings/screenings are held {day}s at {time} in {location}. We also hold some social events on Saturdays.
+                  Weekly anime meetings/screenings are held {day}s at {time} in {location}. We also hold some social events on Saturdays.
                 </p>
               </div>
               
