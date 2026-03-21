@@ -13,5 +13,15 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    imageSizes: [
+      {
+        name: 'portrait',
+        width: 400,
+        height: 400,
+        position: 'centre',
+      }
+    ],
+    crop: true
+  }
 }
