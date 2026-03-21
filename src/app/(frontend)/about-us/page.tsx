@@ -43,7 +43,32 @@ export default async function HomePage() {
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
 
-  
+  const { docs: bannerLinks } = await payload.find({
+    collection: 'bannerLinks',
+    limit: 15,
+  })
+
+  const { docs: boardMembers } = await payload.find({
+    collection: 'boardMembers',
+    limit: 30,
+    depth:1
+  })
+
+  const { docs: basicInfo } = await payload.find({
+    collection: 'basic',
+    limit: 1,
+  })
+
+  var bgImage;
+  if(basicInfo.length === 0)
+  {
+    bgImage = '/bg3.png';
+  }
+  else
+  {
+    bgImage = (basicInfo.at(0)?.bgImage as { url?: string })?.url;
+  }
+
 
   const teamMembers = [
     { name: "Brian", role: "President", image: brian, year: 'Senior' , major:'Physiological Science'},
@@ -66,7 +91,7 @@ export default async function HomePage() {
  return(
     <div className='scroll-smooth overflow-x-hidden bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen'>
         <SideNavBar></SideNavBar>
-        <Banner></Banner>
+        <Banner links = {bannerLinks}></Banner>
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50 relative overflow-hidden border-pink-200 border-b-2">      
             <div className="max-w-full mx-auto flex items-center justify-center min-h-screen font-['Comfortaa']">
                 <div className="grid md:grid-cols-2 gap-12 items-center w-full h-full absolute top-0 left-0">
@@ -76,7 +101,7 @@ export default async function HomePage() {
                       
                     >
                       <Image
-                        src={'/bg3.png'}
+                        src={bgImage ?? '/bg3.png'}
                         alt="Background"
                         fill
                         className="object-cover object-center"
@@ -97,7 +122,7 @@ export default async function HomePage() {
                                     <h1 className="text-2xl md:text-3xl font-light text-pink-600 mb-6 tracking-wider text-center">
                                     @ UCLA
                                     </h1>
-                                    <p className="text-lg font-normal text-pink-500 tracking-wide text-center leading-relaxed">We&apos;re a club dedicated to facilitating both on and off-campus gatherings for the appreciation of Japanese anime and culture!</p>
+                                    <p className="text-lg font-normal text-pink-500 tracking-wide text-center leading-relaxed">We&apos;re the largest anime club on UCLA campus dedicated to facilitating gatherings for the appreciation of Japanese anime and culture!</p>
                                                                                    
                             </Card>
                         </div>
@@ -117,7 +142,7 @@ export default async function HomePage() {
             </h2>
             
             {/* Call the Client Component here */}
-            <BoardCarousel teamMembers={teamMembers} />
+            <BoardCarousel members={boardMembers} />
           </div>
         </div>
         </div>
