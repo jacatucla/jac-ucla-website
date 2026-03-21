@@ -88,7 +88,7 @@ export default function BoardCarousel({members}: BoardProps) {
                     <div className="text-center space-y-3 relative z-10">
                       <div className="space-y-2">
                         <h3 className="text-xl font-bold text-pink-700 group-hover:text-pink-800 transition-colors">{member['Member Name']}</h3>
-                        <span className="inline-flex items-center relative w-30 md:w-36">
+                        <span className="inline-flex items-center relative w-42 md:w-39 lg:w-36">
                           <span className="w-0 h-0 border-l-0 border-r-[8px] border-r-pink-100 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent"></span>
                           <span className="flex-1 px-4 py-1 bg-pink-100 text-pink-600 text-xs font-semibold border-y border-pink-300">
                             {member.Role}
