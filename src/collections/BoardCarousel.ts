@@ -5,6 +5,7 @@ export const BoardCarousel: CollectionConfig = {
   admin: {
     useAsTitle:'Member Name'
   },
+  orderable:true,
   fields: [
     {
         name: 'Member Name',
