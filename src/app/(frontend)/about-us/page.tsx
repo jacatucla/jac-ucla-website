@@ -59,7 +59,7 @@ export default async function HomePage() {
     limit: 1,
   })
 
-  var bgImage;
+  let bgImage;
   if(basicInfo.length === 0)
   {
     bgImage = '/bg3.png';

@@ -42,7 +42,7 @@ export default async function HomePage() {
     limit: 1,
   })
 
-  var location, day, time, quarter, bgImage;
+  let location, day, time, quarter, bgImage;
   if(basicInfo.length === 0)
   {
     location = "Haines A25";
@@ -65,7 +65,7 @@ export default async function HomePage() {
     limit: 1,
   })
 
-  var scheduleData;
+  let scheduleData;
 
 
   if(schedule.length === 0){
