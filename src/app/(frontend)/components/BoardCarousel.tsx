@@ -43,6 +43,8 @@ export default function BoardCarousel({members}: BoardProps) {
 
                     {/* Background image — absolutely positioned behind content, clipped to top portion only */}
 {/* Background image — pull it flush to the card edge despite CardContent padding */}
+                      
+                      {(member.BackgroundImage as Media)?.url && (
                       <div className="absolute -top-6 -left-6 -right-6 overflow-hidden border-b-1 border-pink-200" style={{ height: 'calc(66%)' }}>                      
                         <Image
                         src={(member.BackgroundImage as Media)?.url ?? '/fallback-bg.png'}
@@ -63,7 +65,7 @@ export default function BoardCarousel({members}: BoardProps) {
                             WebkitMaskImage: 'linear-gradient(to bottom, transparent, black)',
                           }}
                         />
-                    </div>
+                    </div>)}
 
                     {/* Decorative background circle - shadow effect (unchanged) */}
                     <div className="absolute top-8 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none">

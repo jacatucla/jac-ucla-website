@@ -322,6 +322,7 @@ export interface BannerLink {
  */
 export interface BoardMember {
   id: number;
+  _order?: string | null;
   'Member Name': string;
   Role?:
     | (
@@ -599,6 +600,7 @@ export interface BannerLinksSelect<T extends boolean = true> {
  * via the `definition` "boardMembers_select".
  */
 export interface BoardMembersSelect<T extends boolean = true> {
+  _order?: T;
   'Member Name'?: T;
   Role?: T;
   Year?: T;
