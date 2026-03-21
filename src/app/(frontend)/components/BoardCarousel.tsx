@@ -23,6 +23,7 @@ export interface BoardProps
 export default function BoardCarousel({members}: BoardProps) {
   const [api, setApi] = useState<CarouselApi>()
 
+
   return (
     <div className="relative border-4 border-pink-400 rounded-3xl p-8 md:p-12 bg-gradient-to-br from-white/80 via-pink-50/60 to-white/80 backdrop-blur-md shadow-2xl overflow-visible">
       {/* Decorative corner elements */}
@@ -75,7 +76,7 @@ export default function BoardCarousel({members}: BoardProps) {
                     {/* Profile picture (unchanged) */}
                     <div className="relative w-36 h-36 rounded-full overflow-hidden border-4 border-pink-200 shadow-lg shrink-0 group-hover:border-pink-300 group-hover:shadow-xl transition-all duration-300 z-10">
                       <Image
-                        src={(member.Picture as Media).url ?? '/fallback.png'}
+                        src={(member.Picture as Media).sizes?.portrait?.url ?? (member.Picture as Media).url ?? '/fallback.png'}
                         alt={(member.Picture as Media).alt}
                         fill
                         priority={index < 3}
