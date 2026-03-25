@@ -22,8 +22,8 @@ function mapPayloadToSchedule(doc: any) {
     const weekData = doc[weekKey] ?? {};
     return {
       week: weekKey,
-      thursday: weekData.Thursday ?? "---",
-      saturday: weekData.Saturday ?? "---",
+      thursday: weekData.Thursday || "---",
+      saturday: weekData.Saturday || "---",
     };
   });
 }
