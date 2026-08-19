@@ -11,6 +11,7 @@ import { BoardCarousel } from './collections/BoardCarousel'
 import { HeroCarousel } from './collections/HeroCarousel'
 import { Schedule } from './collections/Schedule'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { resendAdapter } from '@payloadcms/email-resend'
 import sharp from 'sharp'
 
 const filename = fileURLToPath(import.meta.url)
@@ -43,4 +44,10 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
   ],
+  email: resendAdapter({
+    defaultFromAddress: 'noreply@jacatucla.org',
+    defaultFromName: 'jacatucla',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
 })
