@@ -17,6 +17,14 @@ import sharp from 'sharp'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// Must match the logic in next.config.mjs, otherwise image URLs and
+// next/image remotePatterns can disagree about which host is ours.
+const serverURL =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000')
+
 export default buildConfig({
   sharp,
   admin: {
@@ -39,7 +47,11 @@ export default buildConfig({
   plugins: [
     vercelBlobStorage({
       collections: {
-        media: true,
+        media: {
+          // Serve media straight from the blob CDN instead of proxying it
+          // through /api/media/file/*, so image URLs never depend on serverURL.
+          disablePayloadAccessControl: true,
+        },
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
@@ -49,5 +61,5 @@ export default buildConfig({
     defaultFromName: 'jacatucla',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL,
 })
