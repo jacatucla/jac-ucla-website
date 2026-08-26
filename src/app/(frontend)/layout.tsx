@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 
 export const metadata = {
   description: "The Japanese Animation Club at UCLA. JAC at UCLA. UCLA's anime club.",
-  title: 'JAC @ UCLA',
+  title: 'Japanese Animation Club @ UCLA',
 }
 
 const fontSans = FontSans({
