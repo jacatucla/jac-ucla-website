@@ -32,6 +32,8 @@ const Banner = ({ links }: BannerProps) => {
   const [isVisible, setIsVisible] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
+  // On mobile the banner is always open, so there is nothing to hover or tap
+  const [isMobile, setIsMobile] = useState(false)
   // Use a ref to track if the device is touch-based, set after mount to avoid SSR issues
   const isTouchDevice = useRef(false)
   const iconMap: Record<string, React.ReactNode> = {
@@ -68,6 +70,10 @@ const Banner = ({ links }: BannerProps) => {
   useEffect(() => {
     // Detect touch device after mount (safe from SSR)
     isTouchDevice.current = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    const mobileQuery = window.matchMedia('(max-width: 767px), (hover: none) and (pointer: coarse)')
+    const syncMobile = () => setIsMobile(mobileQuery.matches)
+    syncMobile()
+    mobileQuery.addEventListener('change', syncMobile)
     try {
       const savedData = localStorage.getItem('banner-closed')
       if (savedData) {
@@ -82,15 +88,18 @@ const Banner = ({ links }: BannerProps) => {
     } finally {
       setIsLoading(false)
     }
+    return () => mobileQuery.removeEventListener('change', syncMobile)
   }, [])
+  // On mobile the banner is permanently expanded; hover/tap toggling is desktop-only
+  const isOpen = isMobile || isExpanded
   const handleMouseEnter = () => {
-    if (!isTouchDevice.current) setIsExpanded(true)
+    if (!isMobile && !isTouchDevice.current) setIsExpanded(true)
   }
   const handleMouseLeave = () => {
-    if (!isTouchDevice.current) setIsExpanded(false)
+    if (!isMobile && !isTouchDevice.current) setIsExpanded(false)
   }
   const handleBannerClick = () => {
-    if (isTouchDevice.current) setIsExpanded((prev) => !prev)
+    if (!isMobile && isTouchDevice.current) setIsExpanded((prev) => !prev)
   }
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -131,7 +140,11 @@ const Banner = ({ links }: BannerProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`fixed top-0 left-0 right-0 z-40 border-b-2 border-pink-200 overflow-hidden transition-[max-height] duration-500 ease-in-out ${
-        isExpanded ? 'max-h-[215px] shadow-lg' : 'max-h-[81px] shadow-sm cursor-pointer'
+        isMobile
+          ? 'max-h-none shadow-lg'
+          : isOpen
+            ? 'max-h-[215px] shadow-lg'
+            : 'max-h-[81px] shadow-sm cursor-pointer'
       }`}
     >
       {/* Background layers */}
@@ -140,11 +153,11 @@ const Banner = ({ links }: BannerProps) => {
       {/* Background decorations */}
       <div
         className="hidden md:block absolute left-[100px] top-0 bottom-0 w-[130px] bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-500"
-        style={{ opacity: isExpanded ? 0.5 : 0.3 }}
+        style={{ opacity: isOpen ? 0.5 : 0.3 }}
       />
       <div
         className="absolute right-13 top-0 bottom-0 w-[160px] bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-500"
-        style={{ opacity: isExpanded ? 0.5 : 0.3 }}
+        style={{ opacity: isOpen ? 0.5 : 0.3 }}
       />
       {/* Content */}
       <div className="relative max-w-full mx-auto px-2 pt-0.5 pb-1 flex items-center justify-center transition-all duration-500 z-10">
@@ -160,17 +173,20 @@ const Banner = ({ links }: BannerProps) => {
           {/* Chevron hint */}
           <div
             className={`flex justify-center items-center mt-0 overflow-visible transition-all duration-300 ${
-              isExpanded ? 'opacity-0 max-h-0' : 'opacity-100 max-h-4'
+              isMobile ? 'hidden' : isOpen ? 'opacity-0 max-h-0' : 'opacity-100 max-h-4'
             }`}
           >
             <ChevronDown className="w-4 h-4 text-pink-600 animate-pulse" />
           </div>
           {/* Expanded content */}
           <div
-            className={`overflow-visible transition-all ${
-              isExpanded
-                ? 'opacity-100 max-h-[150px] mt-4 duration-500 delay-75'
-                : 'opacity-0 max-h-0 mt-0 duration-300'
+            aria-hidden={!isOpen}
+            className={`transition-all ${
+              isMobile
+                ? 'opacity-100 max-h-none mt-3 overflow-visible duration-300'
+                : isOpen
+                  ? 'opacity-100 max-h-[150px] mt-4 overflow-visible duration-500 delay-75'
+                  : 'pointer-events-none invisible opacity-0 max-h-0 mt-0 overflow-hidden duration-300'
             }`}
           >
             {primaryLinks.length > 0 && (
@@ -190,7 +206,7 @@ const Banner = ({ links }: BannerProps) => {
                     ))}
                   </div>
                 </div>
-                <hr className="my-3 border-pink-600/15 w-4/5 mx-auto" />
+                <hr className="my-2 md:my-3 border-pink-600/15 w-4/5 mx-auto" />
               </>
             )}
             <div>
@@ -200,7 +216,7 @@ const Banner = ({ links }: BannerProps) => {
                     key={index}
                     href={link.href}
                     onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 no-underline font-semibold px-2 py-0.5 rounded-lg bg-white/50 border-[1.5px] border-pink-600/15 transition-all duration-200 hover:bg-white/85 hover:border-pink-600 hover:-translate-y-px hover:shadow-sm"
+                    className="inline-flex items-center gap-1.5 no-underline font-semibold px-2.5 py-1 md:py-0.5 rounded-lg bg-white/50 border-[1.5px] border-pink-600/15 transition-all duration-200 hover:bg-white/85 hover:border-pink-600 hover:-translate-y-px hover:shadow-sm"
                   >
                     <span className="text-pink-600 text-[0.65rem] md:text-xs">{link.icon}</span>
                     <span className="text-pink-600 text-[0.65rem] md:text-xs">{link.text}</span>

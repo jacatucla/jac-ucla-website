@@ -126,8 +126,8 @@ export default async function HomePage() {
               </div>
               
               {/* Table Box */}
-              <div className="border-4 border-pink-400 rounded-2xl pl-6 pr-6 md:pr-8 md:pl-8 bg-white/55 backdrop-blur-xs shadow-lg overflow-hidden">
-                <div className="p-6 md:p-8 pb-4">
+              <div className="border-4 border-pink-400 rounded-2xl px-3 sm:px-6 md:px-8 bg-white/55 backdrop-blur-xs shadow-lg overflow-hidden">
+                <div className="p-4 sm:p-6 md:p-8 pb-4">
                   <h3 className="text-3xl md:text-5xl font-light text-pink-600 text-center tracking-wider font-['Comfortaa'] uppercase">
                     {quarter} Schedule
                   </h3>
@@ -137,14 +137,43 @@ export default async function HomePage() {
 
 
                 <Card className="relative overflow-hidden p-0 shadow-none border-none bg-transparent">
-                  {/* Scroll wrapper for mobile */}
-                  <div className="overflow-x-auto px-4 md:px-2 py-6 pb-12">
-                    <table className="w-full min-w-[500px] md:min-w-0 font-['Comfortaa'] border-collapse border-2 border-pink-400">
+                  {/* Stacked cards on mobile — no horizontal scrolling */}
+                  <div className="md:hidden font-['Comfortaa'] px-1 py-4 pb-8 space-y-3">
+                    {scheduleData.map((item, index) => (
+                      <div
+                        key={index}
+                        className="border-2 border-pink-400 rounded-xl overflow-hidden bg-white/40"
+                      >
+                        <div className="bg-pink-50/40 border-b-2 border-pink-400 py-2 px-3 text-center text-sm font-light tracking-wider text-pink-600 uppercase">
+                          {item.week}
+                        </div>
+                        <dl className="divide-y divide-pink-400/50">
+                          {[
+                            { label: 'Thursday', value: item.thursday },
+                            { label: 'Saturday', value: item.saturday },
+                          ].map(({ label, value }) => (
+                            <div key={label} className="flex items-baseline gap-3 py-2.5 px-3">
+                              <dt className="w-[4.5rem] shrink-0 text-[0.7rem] uppercase tracking-wide text-pink-600/70 font-light">
+                                {label}
+                              </dt>
+                              <dd className="flex-1 text-sm text-pink-600 font-light break-words">
+                                {value}
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Full table from md up */}
+                  <div className="hidden md:block px-2 py-6 pb-12">
+                    <table className="w-full font-['Comfortaa'] border-collapse border-2 border-pink-400">
                       <thead>
                         <tr className="border-b-2 border-pink-400 bg-pink-50/20">
-                          <th className="py-3 px-2 md:px-6 text-sm md:text-lg font-light text-pink-600 border-r-2 border-pink-400">WEEK</th>
-                          <th className="py-3 px-2 md:px-6 text-sm md:text-lg font-light text-pink-600 border-r-2 border-pink-400">THURSDAY</th>
-                          <th className="py-3 px-2 md:px-6 text-sm md:text-lg font-light text-pink-600">SATURDAY</th>
+                          <th className="py-3 px-6 text-lg font-light text-pink-600 border-r-2 border-pink-400">WEEK</th>
+                          <th className="py-3 px-6 text-lg font-light text-pink-600 border-r-2 border-pink-400">THURSDAY</th>
+                          <th className="py-3 px-6 text-lg font-light text-pink-600">SATURDAY</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -156,13 +185,13 @@ export default async function HomePage() {
                               index !== scheduleData.length - 1 ? "border-b border-pink-400" : ""
                             )}
                           >
-                            <td className="py-3 px-2 md:px-6 text-xs md:text-base text-pink-600 font-light text-center border-r border-pink-400">
+                            <td className="py-3 px-6 text-base text-pink-600 font-light text-center border-r border-pink-400">
                               {item.week}
                             </td>
-                            <td className="py-3 px-2 md:px-6 text-xs md:text-base text-pink-600 font-light text-center border-r border-pink-400">
+                            <td className="py-3 px-6 text-base text-pink-600 font-light text-center border-r border-pink-400">
                               {item.thursday}
                             </td>
-                            <td className="py-3 px-2 md:px-6 text-xs md:text-base text-pink-600 font-light text-center">
+                            <td className="py-3 px-6 text-base text-pink-600 font-light text-center">
                               {item.saturday}
                             </td>
                           </tr>
