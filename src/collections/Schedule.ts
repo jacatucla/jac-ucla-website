@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateHooks, HOME } from '../hooks/revalidate'
 
 export const Schedule: CollectionConfig = {
   slug: 'event',
+  hooks: revalidateHooks([HOME]),
   admin:
   {
     useAsTitle: 'Name'

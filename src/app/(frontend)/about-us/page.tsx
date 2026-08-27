@@ -1,8 +1,6 @@
-import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
-import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import { Card, CardContent} from '@/components/ui/card';
@@ -19,45 +17,24 @@ import SideNavBar from '../components/SideNavBar';
 import Banner from '../components/Banner'
 import { cn } from "@/lib/utils";
 import '../styles.css'
-import brian from '../../../../public/portraits/brian.jpeg';
-import ryan from '../../../../public/portraits/ryan.jpeg';
-import winnie from '../../../../public/portraits/winnie.jpeg';
-import chelsea from '../../../../public/portraits/chelsea.jpeg';
-import ian from '../../../../public/portraits/ian.png';
-import matthew from '../../../../public/portraits/matthew.jpeg';
-import emily from '../../../../public/portraits/emily.jpeg';
-import audrey from '../../../../public/portraits/audrey.jpeg';
-import daniel from '../../../../public/portraits/daniel.jpeg';
-import kai from '../../../../public/portraits/kai.jpeg';
-import nao from '../../../../public/portraits/nao.jpeg';
-import amy from '../../../../public/portraits/amy.jpeg';
-import amana from '../../../../public/portraits/amana.jpeg';
-import natalia from '../../../../public/portraits/natalia.jpeg';
 import BoardCarousel from '../components/BoardCarousel'
 
 
 
+// Statically render this page and refresh it at most once every 5 minutes.
+// Payload collection hooks call revalidatePath('/about-us') on edit.
+export const revalidate = 300
+
 export default async function HomePage() {
-  const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
 
-  const { docs: bannerLinks } = await payload.find({
-    collection: 'bannerLinks',
-    limit: 15,
-  })
-
-  const { docs: boardMembers } = await payload.find({
-    collection: 'boardMembers',
-    limit: 30,
-    depth:1
-  })
-
-  const { docs: basicInfo } = await payload.find({
-    collection: 'basic',
-    limit: 1,
-  })
+  // One round trip instead of three sequential ones.
+  const [{ docs: bannerLinks }, { docs: boardMembers }, { docs: basicInfo }] = await Promise.all([
+    payload.find({ collection: 'bannerLinks', limit: 15 }),
+    payload.find({ collection: 'boardMembers', limit: 30, depth: 1 }),
+    payload.find({ collection: 'basic', limit: 1 }),
+  ])
 
   let bgImage;
   if(basicInfo.length === 0)
@@ -70,23 +47,6 @@ export default async function HomePage() {
   }
 
 
-  const teamMembers = [
-    { name: "Brian", role: "President", image: brian, year: 'Senior' , major:'Physiological Science'},
-    { name: "Ryan", role: "Vice President", image: ryan, year: 'Senior', major:'Cognitive Science'},
-    { name: "Winnie", role: "EVP", image: winnie, year: 'Junior', major: 'Bioengineering'},
-    { name: "Chelsea", role: "EVP", image: chelsea, year: 'Junior', major: 'Biology' },
-    { name: "Ian", role: "Screener", image:ian, year: 'Junior', major: 'Economics'},
-    { name: "Matthew", role: "Webmaster", image: matthew, year: 'Sophomore', major:'Cognitive Science'},
-    { name: "Emily", role: "Stashmaster", image: emily, year: 'Junior', major: 'MCDB'},
-    { name: "Audrey", role: "Treasurer", image: audrey, year: 'Senior', major: 'MIMG'},
-    { name: "Natalia", role: "Secretary", image: natalia, year: 'Senior', major: 'CogSci & Art History'},
-    { name: "Daniel", role: "Discord Manager", image: daniel, year: 'Senior', major: 'Electrical Engineering'},
-    { name: "Kai", role: "Discord Manager", image: kai, year: 'Sophomore', major:'Biochemistry'},
-    { name: "Nao", role: "General Officer", image: nao, year: 'Junior', major: 'Linguistics & Psychology'},
-    { name: "Amy", role: "General Officer", image: amy, year: 'Sophomore', major: 'Psychology & English'},
-    { name: "Amana", role: "General Officer", image: amana, year: 'Junior', major: 'Stats & Data Science'}
-
-  ];
 
  return(
     <div className='scroll-smooth overflow-x-hidden bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen'>

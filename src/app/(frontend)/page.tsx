@@ -1,9 +1,7 @@
 
-import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
-import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import { Card } from '@/components/ui/card';
@@ -29,18 +27,23 @@ function mapPayloadToSchedule(doc: any) {
 }
 
 
+// Statically render this page and refresh it at most once every 5 minutes.
+// Payload collection hooks call revalidatePath('/') so CMS edits show up
+// immediately rather than waiting out the window.
+export const revalidate = 300
+
 export default async function HomePage() {
-  const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
-
-  const { docs: basicInfo } = await payload.find({
-    collection: 'basic',
-    limit: 1,
-  })
+  // One round trip instead of four sequential ones.
+  const [{ docs: basicInfo }, { docs: schedule }, { docs: carousel }, { docs: bannerLinks }] =
+    await Promise.all([
+      payload.find({ collection: 'basic', limit: 1 }),
+      payload.find({ collection: 'event', limit: 1 }),
+      payload.find({ collection: 'carouselSlide', limit: 15 }),
+      payload.find({ collection: 'bannerLinks', limit: 15 }),
+    ])
 
   let location, day, time, quarter, bgImage;
   if(basicInfo.length === 0)
@@ -59,11 +62,6 @@ export default async function HomePage() {
     quarter = basicInfo.at(0)?.Quarter;
     bgImage = (basicInfo.at(0)?.bgImage as { url?: string })?.url;
   }
-
-  const { docs: schedule } = await payload.find({
-    collection: 'event',
-    limit: 1,
-  })
 
   let scheduleData;
 
@@ -87,19 +85,6 @@ export default async function HomePage() {
     scheduleData = mapPayloadToSchedule(schedule.at(0))
   }
 
-  const { docs: carousel } = await payload.find({
-    collection: 'carouselSlide',
-    limit: 15,
-  })
-
-  const { docs: bannerLinks } = await payload.find({
-    collection: 'bannerLinks',
-    limit: 15,
-  })
-  
-
-
-  
   return (
       <div className='scroll-smooth overflow-x-hidden bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen'>
         <SideNavBar />

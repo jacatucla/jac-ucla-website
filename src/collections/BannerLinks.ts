@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateHooks, HOME, ABOUT } from '../hooks/revalidate'
 
 export const BannerLinks: CollectionConfig = {
   slug: 'bannerLinks',
+  hooks: revalidateHooks([HOME, ABOUT]),
   admin: {
     useAsTitle: 'Text'
   },
