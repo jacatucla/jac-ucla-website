@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateHooks, HOME } from '../hooks/revalidate'
 
 const SLIDE_TYPES = [
   { label: 'Default (title card)',        value: 'default' },
@@ -22,6 +23,7 @@ const hasCard = (_: any, { type }: { type?: string }) => type !== 'image-only' &
 
 export const HeroCarousel: CollectionConfig = {
   slug: 'carouselSlide',
+  hooks: revalidateHooks([HOME]),
   admin: {
     useAsTitle: 'name',
     description: 'Each document is one slide in the hero carousel.',

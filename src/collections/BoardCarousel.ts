@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateHooks, ABOUT } from '../hooks/revalidate'
 
 export const BoardCarousel: CollectionConfig = {
   slug: 'boardMembers',
+  hooks: revalidateHooks([ABOUT]),
   admin: {
     useAsTitle:'Member Name'
   },

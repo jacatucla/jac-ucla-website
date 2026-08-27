@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Card } from '@/components/ui/card'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -225,6 +225,10 @@ const FADE_IN_STYLES = `
 
 const HeroCarousel = ({ location, day, time, slideList, bgImage}: CarouselProp) => {
   const [currentSlide, setCurrentSlide] = useState(0)
+  // Index that was on screen before the current one, so it stays mounted long
+  // enough to finish its cross-fade out.
+  const prevShownRef = useRef(0)
+  const lastShown = prevShownRef.current
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [autoScrollKey, setAutoScrollKey] = useState(0)
@@ -287,6 +291,16 @@ const HeroCarousel = ({ location, day, time, slideList, bgImage}: CarouselProp) 
   ]
 
   useEffect(() => {
+    prevShownRef.current = currentSlide
+  }, [currentSlide])
+
+  // Only the visible slide and its immediate neighbours are put in the DOM.
+  // Mounting every slide made the browser fetch every full-viewport background
+  // image on first paint.
+  const n = slides.length
+  const mounted = new Set([currentSlide, (currentSlide + 1) % n, (currentSlide - 1 + n) % n, lastShown])
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
     }, 8000)
@@ -320,24 +334,26 @@ const HeroCarousel = ({ location, day, time, slideList, bgImage}: CarouselProp) 
 
       {/* Background images */}
       <div className="absolute inset-0 z-0">
-        {slides.map((slide, i) => (
-          <div
-            key={slide.bgImage}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              currentSlide === i ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <Image
-              src={slide.bgImage}
-              alt="Background"
-              fill
-              priority={i === 0}
-              className="object-cover object-center"
-              sizes="100vw"
-              quality={100}
-            />
-          </div>
-        ))}
+        {slides.map((slide, i) =>
+          mounted.has(i) ? (
+            <div
+              key={`${i}-${slide.bgImage}`}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                currentSlide === i ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <Image
+                src={slide.bgImage}
+                alt="Background"
+                fill
+                priority={i === 0}
+                className="object-cover object-center"
+                sizes="100vw"
+                quality={75}
+              />
+            </div>
+          ) : null,
+        )}
       </div>
 
       {/* Decorative dots */}

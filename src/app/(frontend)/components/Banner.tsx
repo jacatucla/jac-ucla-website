@@ -29,8 +29,9 @@ export interface BannerProps {
   links: BannerLink[]
 }
 const Banner = ({ links }: BannerProps) => {
+  // Rendered server-side straight away. The localStorage check below can only
+  // hide it, so there is no need to withhold the first paint waiting on JS.
   const [isVisible, setIsVisible] = useState(true)
-  const [isLoading, setIsLoading] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
   // On mobile the banner is always open, so there is nothing to hover or tap
   const [isMobile, setIsMobile] = useState(false)
@@ -85,8 +86,6 @@ const Banner = ({ links }: BannerProps) => {
       }
     } catch {
       // ignore
-    } finally {
-      setIsLoading(false)
     }
     return () => mobileQuery.removeEventListener('change', syncMobile)
   }, [])
@@ -120,7 +119,6 @@ const Banner = ({ links }: BannerProps) => {
       // ignore
     }
   }
-  if (isLoading) return null
   if (!isVisible) {
     return (
       <div className="fixed top-2 right-2 z-40">

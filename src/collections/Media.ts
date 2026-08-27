@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateHooks, HOME, ABOUT } from '../hooks/revalidate'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  hooks: revalidateHooks([HOME, ABOUT]),
   folders: true,
   access: {
     read: () => true,
