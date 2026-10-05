@@ -71,6 +71,7 @@ export interface Config {
     event: Event;
     carouselSlide: CarouselSlide;
     bannerLinks: BannerLink;
+    pageLinks: PageLink;
     boardMembers: BoardMember;
     media: Media;
     users: User;
@@ -90,6 +91,7 @@ export interface Config {
     event: EventSelect<false> | EventSelect<true>;
     carouselSlide: CarouselSlideSelect<false> | CarouselSlideSelect<true>;
     bannerLinks: BannerLinksSelect<false> | BannerLinksSelect<true>;
+    pageLinks: PageLinksSelect<false> | PageLinksSelect<true>;
     boardMembers: BoardMembersSelect<false> | BoardMembersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -327,6 +329,25 @@ export interface BannerLink {
   createdAt: string;
 }
 /**
+ * Links shown only on the /links page. Enabled Banner Links, Discord and Instagram are added below these automatically.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageLinks".
+ */
+export interface PageLink {
+  id: number;
+  Link: string;
+  Text: string;
+  visible: boolean;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
+  'Icon Type'?: ('link-icon' | 'form-icon' | 'game-icon') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "boardMembers".
  */
@@ -419,6 +440,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'bannerLinks';
         value: number | BannerLink;
+      } | null)
+    | ({
+        relationTo: 'pageLinks';
+        value: number | PageLink;
       } | null)
     | ({
         relationTo: 'boardMembers';
@@ -601,6 +626,19 @@ export interface BannerLinksSelect<T extends boolean = true> {
   Link?: T;
   Text?: T;
   visible?: T;
+  'Icon Type'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageLinks_select".
+ */
+export interface PageLinksSelect<T extends boolean = true> {
+  Link?: T;
+  Text?: T;
+  visible?: T;
+  order?: T;
   'Icon Type'?: T;
   updatedAt?: T;
   createdAt?: T;

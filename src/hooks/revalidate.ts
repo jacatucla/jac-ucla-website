@@ -40,3 +40,4 @@ export function revalidateHooks(paths: string[]): {
 
 export const HOME = '/'
 export const ABOUT = '/about-us'
+export const LINKS = '/links'

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import {BannerLinks} from './collections/BannerLinks'
+import { PageLinks } from './collections/PageLinks'
 import {BasicInfo} from './collections/BasicInfo'
 import { BoardCarousel } from './collections/BoardCarousel'
 import { HeroCarousel } from './collections/HeroCarousel'
@@ -25,6 +26,29 @@ const serverURL =
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : 'http://localhost:3000')
 
+// The production domain redirects apex <-> www (whichever direction Vercel
+// is configured for), so a request can legitimately arrive from either
+// hostname even though `serverURL` above only names one of them. Trust both
+// for CORS/CSRF so a future domain change (or a misconfigured
+// NEXT_PUBLIC_SERVER_URL) degrades to a clear CSRF rejection instead of a
+// silent "you do not have permission" on every admin write.
+const withWwwVariant = (url: string): string[] => {
+  try {
+    const parsed = new URL(url)
+    const variant = new URL(url)
+    variant.hostname = parsed.hostname.startsWith('www.')
+      ? parsed.hostname.slice(4)
+      : `www.${parsed.hostname}`
+    return [parsed.origin, variant.origin]
+  } catch {
+    return [url]
+  }
+}
+
+const trustedOrigins = Array.from(
+  new Set([...withWwwVariant(serverURL), 'http://localhost:3000']),
+)
+
 export default buildConfig({
   sharp,
   admin: {
@@ -33,7 +57,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [BasicInfo, Schedule, HeroCarousel, BannerLinks, BoardCarousel, Media, Users],
+  collections: [BasicInfo, Schedule, HeroCarousel, BannerLinks, PageLinks, BoardCarousel, Media, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -62,4 +86,6 @@ export default buildConfig({
     apiKey: process.env.RESEND_API_KEY || '',
   }),
   serverURL,
+  cors: trustedOrigins,
+  csrf: trustedOrigins,
 })
