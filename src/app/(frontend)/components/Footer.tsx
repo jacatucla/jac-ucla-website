@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { Link2 } from 'lucide-react'
 
 
 export default function Footer()
@@ -54,16 +55,12 @@ export default function Footer()
                     </svg>
                 </a>
                 
-                {/* Linktree Icon */}
+                {/* Links Page Icon */}
                 <a 
-                    href="https://linktr.ee/jacatucla?utm_source=linktree_profile_share&ltsid=af5f91b0-3be3-4c65-a757-f86259910272&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn5ILABEtU55l4z4IpxESumUTWZS946MCwiCmiB7NIJzkXs685XruRDWPXYbY_aem_quC3IdWvkJhmF2zZbbOXng" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                    href="/links"
                     className="bg-white/98 hover:bg-pink-50 p-2 sm:p-2.5 md:p-3 lg:p-3.5 rounded-xl sm:rounded-2xl shadow-xl transition-all duration-300 hover:scale-110 hover:shadow-2xl border-2 border-pink-400"
                 >
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M13.511 5.853l4.005-4.117 2.325 2.381-4.201 4.005h5.909v3.305h-5.937l4.229 4.108-2.325 2.334-5.741-5.769-5.741 5.769-2.325-2.325 4.229-4.108H2V8.122h5.909L3.708 4.117l2.325-2.381 4.005 4.117V0h3.473v5.853zM10.038 16.16h3.473v7.842h-3.473V16.16z"/>
-                    </svg>
+                    <Link2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-pink-600" />
                 </a>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import {BannerLinks} from './collections/BannerLinks'
+import { PageLinks } from './collections/PageLinks'
 import {BasicInfo} from './collections/BasicInfo'
 import { BoardCarousel } from './collections/BoardCarousel'
 import { HeroCarousel } from './collections/HeroCarousel'
@@ -56,7 +57,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [BasicInfo, Schedule, HeroCarousel, BannerLinks, BoardCarousel, Media, Users],
+  collections: [BasicInfo, Schedule, HeroCarousel, BannerLinks, PageLinks, BoardCarousel, Media, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
